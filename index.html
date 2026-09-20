@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seleksi Peserta LCC PAI FAIR 2026 - SD Anugerah Abadi 1 Bengalon</title>
+  <style>
+    :root {
+      --primary-color: #0d6efd;
+      --secondary-color: #0b5ed7;
+      --success-color: #198754;
+      --bg-color: #f4f6f9;
+      --card-bg: #ffffff;
+      --text-color: #212529;
+      --border-radius: 10px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: var(--bg-color); color: var(--text-color); line-height: 1.5; padding: 15px; }
+    .container { max-width: 1050px; margin: 0 auto; }
+    
+    header {
+      text-align: center; margin-bottom: 20px;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white; padding: 20px; border-radius: var(--border-radius);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    header h1 { font-size: 1.5rem; margin-bottom: 4px; }
+    header p { font-size: 0.95rem; opacity: 0.9; }
+
+    .card {
+      background: var(--card-bg); border-radius: var(--border-radius);
+      padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 20px;
+    }
+
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.95rem; }
+    .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 6px; font-size: 1rem; }
+
+    .btn {
+      display: inline-block; background-color: var(--primary-color); color: white;
+      border: none; padding: 10px 18px; font-size: 0.95rem; font-weight: 600;
+      border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .btn:hover { background-color: var(--secondary-color); }
+    .btn-secondary { background-color: #6c757d; }
+    .btn-secondary:hover { background-color: #5a6268; }
+    .btn-warning { background-color: #ffc107; color: #000; }
+    .btn-warning:hover { background-color: #e0a800; }
+    .btn-success { background-color: var(--success-color); }
+    .btn-success:hover { background-color: #146c43; }
+
+    .hidden { display: none !important; }
+
+    .quiz-layout { display: grid; grid-template-columns: 1fr 300px; gap: 20px; }
+    @media (max-width: 768px) { .quiz-layout { grid-template-columns: 1fr; } }
+
+    .quiz-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e9ecef; padding-bottom: 10px; margin-bottom: 15px; }
+    .question-number { font-weight: bold; font-size: 1.1rem; color: var(--primary-color); }
+    .question-text { font-size: 1.05rem; font-weight: 600; margin-bottom: 18px; }
+
+    .options-list { list-style: none; }
+    .option-item { margin-bottom: 10px; }
+    .option-item label {
+      display: flex; align-items: center; padding: 10px 12px;
+      border: 1px solid #dee2e6; border-radius: 6px; cursor: pointer; transition: background-color 0.2s;
+    }
+    .option-item label:hover { background-color: #f8f9fa; }
+    .option-item input[type="radio"] { margin-right: 10px; }
+
+    .grid-container { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 12px; }
+    .grid-title { font-weight: bold; font-size: 0.9rem; margin-bottom: 10px; text-align: center; color: #495057; }
+    .number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; max-height: 320px; overflow-y: auto; padding-right: 4px; }
+    
+    .num-box {
+      aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+      background-color: #e9ecef; color: #333; font-weight: bold; font-size: 0.85rem;
+      border-radius: 4px; cursor: pointer; border: 2px solid transparent; user-select: none;
+    }
+    .num-box.answered { background-color: #198754 !important; color: white !important; }
+    .num-box.active { border-color: #0d6efd !important; box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.4); }
+
+    .nav-footer { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; }
+    
+    .element-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 12px; border: 1px solid #e0e0e0; border-radius: 6px; margin-bottom: 8px; background-color: #fff;
+    }
+    .badge { font-size: 0.8rem; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+    .badge-success { background: #d1e7dd; color: #0f5132; }
+    .badge-warning { background: #fff3cd; color: #664d03; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>SELEKSI PESERTA LCC PAI FAIR 2026</h1>
+      <p>SD Anugerah Abadi 1 Bengalon</p>
+    </header>
+
+    <!-- DASHBOARD LOGIN & PILIH ELEMEN -->
+    <div id="dashboard-card" class="card">
+      <h2 style="margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 8px;">Dashboard Peserta</h2>
+      
+      <div id="user-info-form">
+        <div class="form-group">
+          <label for="student-name">Nama Lengkap Peserta</label>
+          <input type="text" id="student-name" placeholder="Masukkan nama lengkap" required>
+        </div>
+        <div class="form-group">
+          <label for="student-class">Kelas</label>
+          <select id="student-class" required>
+            <option value="">-- Pilih Kelas --</option>
+            <option value="4">Kelas 4</option>
+            <option value="5">Kelas 5</option>
+            <option value="6">Kelas 6</option>
+          </select>
+        </div>
+        <button type="button" class="btn" onclick="saveUserInfo()">Simpan & Lanjutkan Pilihan Elemen</button>
+      </div>
+
+      <div id="element-selection-area" class="hidden">
+        <div style="margin-bottom: 15px; background: #e7f1ff; padding: 10px; border-radius: 6px;" id="active-user-badge"></div>
+        <h3 style="font-size: 1rem; margin-bottom: 10px;">Pilih Elemen Lomba yang Ingin Dikerjakan:</h3>
+        <div class="element-progress-list" id="element-list"></div>
+        <button class="btn btn-success" style="width: 100%; margin-top: 20px;" onclick="submitAllToSheets()">Kirim Seluruh Hasil ke Google Sheets</button>
+      </div>
+    </div>
+
+    <!-- TAMPILAN SOAL & NAVIGASI ANBK -->
+    <div id="quiz-card" class="card hidden">
+      <div style="margin-bottom: 15px;">
+        <button class="btn btn-warning" onclick="returnToDashboard()">← Kembali ke Dashboard / Pindah Elemen</button>
+      </div>
+
+      <div class="quiz-layout">
+        <div>
+          <div class="quiz-header">
+            <div class="question-number" id="q-number">Soal 1 dari 40</div>
+            <div id="quiz-element-title" style="font-weight: 600; color: #495057;">Elemen A</div>
+          </div>
+          <div class="question-text" id="q-text">Memuat soal...</div>
+          <ul class="options-list" id="q-options"></ul>
+          <div class="nav-footer">
+            <button id="btn-prev" class="btn btn-secondary" onclick="prevQuestion()">Sebelumnya</button>
+            <button id="btn-next" class="btn" onclick="nextQuestion()">Berikutnya</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="grid-container">
+            <div class="grid-title">NAVIGASI SOAL (ANBK)</div>
+            <div class="number-grid" id="number-grid"></div>
+            <div style="margin-top: 15px; font-size: 0.75rem; color: #6c757d;">
+              <span style="display:inline-block; width:10px; height:10px; background:#198754; border-radius:2px;"></span> Sudah Diisi &nbsp;
+              <span style="display:inline-block; width:10px; height:10px; background:#e9ecef; border-radius:2px;"></span> Belum Diisi
+            </div>
+            <button class="btn btn-success" style="width: 100%; margin-top: 15px;" onclick="submitCurrentElement()">Simpan Elemen Ini</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // MASUKKAN URL GOOGLE APPS SCRIPT DI SINI
+    const SPREADSHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwNzgUb4y1vH5O1smgB4zmkArfdOmQsk6MYqm4IOnprPHId47zmlofesTLc87H8WqOwlg/exec";
+
+    const elementsInfo = {
+      "A": "Al-Qur'an dan Hadis",
+      "B": "Akidah",
+      "C": "Akhlak",
+      "D": "Fikih",
+      "E": "Sejarah Islam",
+      "F": "Pengetahuan Umum Keislaman"
+    };
+
+    // BANK SOAL LENGKAP ELEMEN A SAMPAI F (240 SOAL UTUH)
+    const questionBank = {
+      "A": [
+        { q: "1. Arti dari nama surah Al-Fatihah adalah...", options: ["A. Pembukaan", "B. Pertolongan", "C. Waktu Subuh", "D. Masa"], answer: 0 },
+        { q: "2. Surah Al-Fatihah terdiri dari ... ayat.", options: ["A. 5", "B. 6", "C. 7", "D. 8"], answer: 2 },
+        { q: "3. Surah Al-Fatihah dinamakan Ummul Kitab yang artinya...", options: ["A. Penutup Al-Qur'an", "B. Induk Al-Qur'an", "C. Keagungan Al-Qur'an", "D. Firman Allah"], answer: 1 },
+        { q: "4. Surah Al-Kautsar mengandung perintah untuk...", options: ["A. Bayar zakat dan puasa", "B. Salat dan berkurban", "C. Haji dan umrah", "D. Sedekah dan menuntut ilmu"], answer: 1 },
+        { q: "5. Nama Al-Kautsar memiliki arti...", options: ["A. Nikmat yang banyak", "B. Pertolongan Allah", "C. Kemenangan Islam", "D. Barang yang berguna"], answer: 0 },
+        { q: "6. Jumlah ayat dalam surah Al-Kautsar adalah...", options: ["A. 3 ayat", "B. 4 ayat", "C. 5 ayat", "D. 7 ayat"], answer: 0 },
+        { q: "7. Surah Al-Ikhlas menegaskan pokok ajaran tentang...", options: ["A. Memurnikan keesaan Allah", "B. Tata cara ibadah harian", "C. Kisah para nabi terdahulu", "D. Hukum perdagangan dalam Islam"], answer: 0 },
+        { q: "8. Lanjutan dari ayat 'Lam yalid walam...'", options: ["A. Yūlad", "B. Yakuṉ", "C. Aḥad", "D. Kufuwan"], answer: 0 },
+        { q: "9. Surah An-Nasr diturunkan di kota...", options: ["A. Mekah", "B. Madinah", "C. Taif", "D. Yerusalem"], answer: 1 },
+        { q: "10. Arti dari nama surah An-Nasr adalah...", options: ["A. Pertolongan", "B. Kemenangan", "C. Kebenaran", "D. Keikhlasan"], answer: 0 },
+        { q: "11. Surah Al-Falaq mengajarkan kita untuk memohon perlindungan dari kejahatan...", options: ["A. Makhluk, kegelapan, sihir, dan dengki", "B. Musuh di medan perang", "C. Bencana alam dan penyakit", "D. Kemiskinan dan kelaparan"], answer: 0 },
+        { q: "12. Arti dari nama surah Al-Falaq adalah...", options: ["A. Waktu Subuh", "B. Fajar Sidik", "C. Waktu Malam", "D. Waktu Dhuha"], answer: 0 },
+        { q: "13. Pendusta agama menurut surah Al-Ma'un adalah orang yang...", options: ["A. Menghardik anak yatim dan enggan menolong fakir miskin", "B. Tidak hafal surah pendek", "C. Sering berbuat bohong saat berdagang", "D. Jarang bersedekah di masjid"], answer: 0 },
+        { q: "14. Surah Al-Ma'un terdiri atas ... ayat.", options: ["A. 5", "B. 6", "C. 7", "D. 8"], answer: 2 },
+        { q: "15. Arti dari nama surah An-Nas adalah...", options: ["A. Manusia", "B. Jin", "C. Malaikat", "D. Makhluk"], answer: 0 },
+        { q: "16. Dalam surah An-Nas, kita berlindung kepada Allah dari bisikan kejahatan yang berasal dari...", options: ["A. Jin dan manusia", "B. Setan dan binatang buas", "C. Bencana dan musibah", "D. Hawa nafsu jahat"], answer: 0 },
+        { q: "17. Arti dari nama surah Al-'Asr adalah...", options: ["A. Masa atau waktu", "B. Kemenangan", "C. Pertolongan", "D. Kebaikan"], answer: 0 },
+        { q: "18. Menurut surah Al-'Asr, manusia berada dalam kerugian kecuali orang yang...", options: ["A. Beriman, beramal saleh, dan saling menasihati dalam kebenaran & kesabaran", "B. Memiliki harta melimpah dan jabatan tinggi", "C. Rajin bekerja keras tanpa henti", "D. Dikenal oleh banyak orang"], answer: 0 },
+        { q: "19. Arti nama surah At-Tin diambil dari nama...", options: ["A. Buah Tin", "B. Buah Zaitun", "C. Gunung Sinai", "D. Kota Mekah"], answer: 0 },
+        { q: "20. Manusia diciptakan Allah Swt. dalam bentuk yang...", options: ["A. Sebaik-baiknya (Ahsani Taqwim)", "B. Paling kuat", "C. Sempurna tanpa dosa", "D. Paling indah perilakunya"], answer: 0 },
+        { q: "21. Nama lain Al-Qur'an 'Al-Furqan' memiliki arti...", options: ["A. Pembeda antara yang hak dan yang batil", "B. Obat penawar penyakit", "C. Pemberi peringatan", "D. Kitab petunjuk"], answer: 0 },
+        { q: "22. Al-Qur'an dinamakan 'Adz-Dzikr' karena berfungsi sebagai...", options: ["A. Pemberi peringatan", "B. Bacaan mulia", "C. Petunjuk jalan lurus", "D. Tulisan yang dibukukan"], answer: 0 },
+        { q: "23. Nama lain Al-Qur'an yang berarti 'Penyembuh/Obat' adalah...", options: ["A. Asy-Syifa", "B. Al-Huda", "C. Al-Mau'izah", "D. Al-Kitab"], answer: 0 },
+        { q: "24. 'Al-Mau'izah' sebagai nama lain Al-Qur'an memiliki arti...", options: ["A. Pelajaran atau nasihat", "B. Kitab pegangan", "C. Penerang dalam kegelapan", "D. Kitab pembawa kabar gembira"], answer: 0 },
+        { q: "25. Pahala salat berjamaah lebih utama dibandingkan salat sendirian sebanyak...", options: ["A. 27 derajat", "B. 17 derajat", "C. 7 derajat", "D. 30 derajat"], answer: 0 },
+        { q: "26. Perbandingan pahala salat berjamaah dibanding salat munfarid dijelaskan dalam hadis riwayat...", options: ["A. Bukhari dan Muslim", "B. Abu Daud dan Tirmidzi", "C. Ahmad dan An-Nasa'i", "D. Ibnu Majah"], answer: 0 },
+        { q: "27. Hikmah utama dari pelaksanaan salat berjamaah adalah...", options: ["A. Mempererat ukhuwah dan melatih kedisiplinan", "B. Mendapatkan pujian dari sesama jamaah", "C. Menghemat waktu ibadah harian", "D. Menggugurkan kewajiban tanpa syarat"], answer: 0 },
+        { q: "28. Apabila ada Nun Sukun (نْ) bertemu dengan huruf Hamzah (ء), maka hukum bacaannya adalah...", options: ["A. Izhar Halqi", "B. Idgham Bighunnah", "C. Iqlab", "D. Ikhfa Haqiqi"], answer: 0 },
+        { q: "29. Huruf-huruf Idgham Bighunnah terkumpul dalam kata...", options: ["A. ي - ن - م - و", "B. ل - ر", "C. ء - ه - ع - ح", "D. ب"], answer: 0 },
+        { q: "30. Bacaan Idgham Bilaghunnah terjadi apabila Nun Sukun atau Tanwin bertemu dengan huruf...", options: ["A. Lam (ل) dan Ra (ر)", "B. Ya (ي) dan Nun (ن)", "C. Ba (ب)", "D. Mim (م) dan Wau (و)"], answer: 0 },
+        { q: "31. Apabila Nun Sukun bertemu dengan huruf Ba (ب), hukum bacaannya adalah...", options: ["A. Iqlab", "B. Izhar", "C. Ikhfa", "D. Idgham"], answer: 0 },
+        { q: "32. Cara membaca hukum Ikhfa Haqiqi adalah...", options: ["A. Samar-samar disertai dengung", "B. Jelas tanpa dengung", "C. Lebur tanpa dengung", "D. Mengubah suara menjadi Mim"], answer: 0 },
+        { q: "33. Apabila Mim Sukun (مْ) bertemu dengan huruf Mim (م), hukum tajwidnya adalah...", options: ["A. Idgham Mimi / Idgham Mutamasilain", "B. Ikhfa Syafawi", "C. Izhar Syafawi", "D. Izhar Halqi"], answer: 0 },
+        { q: "34. Hukum Ikhfa Syafawi terjadi apabila Mim Sukun (مْ) bertemu dengan huruf...", options: ["A. Ba (ب)", "B. Mim (م)", "C. Alif (ا)", "D. Wau (و)"], answer: 0 },
+        { q: "35. Apabila Mim Sukun bertemu huruf selain Mim dan Ba, dibaca jelas dengan hukum...", options: ["A. Izhar Syafawi", "B. Izhar Halqi", "C. Idgham Bighunnah", "D. Ikhfa Syafawi"], answer: 0 },
+        { q: "36. Pengertian dari bacaan Gunnah adalah...", options: ["A. Dengung pada huruf Nun atau Mim bertasydid", "B. Memantulkan suara pada huruf qalqalah", "C. Memanjangkan bacaan hingga 6 harakat", "D. Meringankan bacaan hamzah"], answer: 0 },
+        { q: "37. Panjang bacaan Gunnah yang dianjurkan adalah...", options: ["A. 2 harakat", "B. 4 harakat", "C. 5 harakat", "D. 6 harakat"], answer: 0 },
+        { q: "38. Contoh lafaz yang mengandung hukum bacaan Gunnah adalah...", options: ["A. إِنَّكَمْ", "B. مِنْ خَوْفٍ", "C. أَنْعَمْتَ", "D. قُلْ هُوَ اللهُ"], answer: 0 },
+        { q: "39. Huruf-huruf Izhar Halqi berjumlah...", options: ["A. 6 huruf", "B. 4 huruf", "C. 2 huruf", "D. 15 huruf"], answer: 0 },
+        { q: "40. Mengubah bunyi Nun Sukun atau Tanwin menjadi bunyi Mim (م) disebut...", options: ["A. Iqlab", "B. Izhar", "C. Ikhfa", "D. Idgham"], answer: 0 }
+      ],
+      "B": [
+        { q: "1. Jumlah Rukun Iman yang wajib diyakini oleh setiap muslim adalah...", options: ["A. 6", "B. 5", "C. 4", "D. 7"], answer: 0 },
+        { q: "2. Meyakini Allah Swt. sebagai Pencipta tunggal alam semesta merupakan wujud...", options: ["A. Iman kepada Allah Swt.", "B. Iman kepada Kitab", "C. Iman kepada Qada dan Qadar", "D. Iman kepada Hari Akhir"], answer: 0 },
+        { q: "3. Makhluk gaib yang diciptakan dari cahaya dan selalu taat adalah...", options: ["A. Malaikat", "B. Jin", "C. Manusia", "D. Iblis"], answer: 0 },
+        { q: "4. Kitab suci Zabur diturunkan kepada Nabi...", options: ["A. Daud a.s.", "B. Musa a.s.", "C. Isa a.s.", "D. Muhammad Saw."], answer: 0 },
+        { q: "5. Meyakini adanya hari pembalasan setelah kehancuran alam semesta adalah wujud...", options: ["A. Iman kepada Hari Akhir", "B. Iman kepada Qada dan Qadar", "C. Iman kepada Rasul", "D. Iman kepada Kitab"], answer: 0 },
+        { q: "6. Meyakini takdir dan ketetapan Allah yang disertai ikhtiar dan doa adalah...", options: ["A. Iman kepada Qada dan Qadar", "B. Iman kepada Hari Akhir", "C. Iman kepada Malaikat", "D. Iman kepada Kitab"], answer: 0 },
+        { q: "7. Asmaulhusna Ar-Rahman artinya...", options: ["A. Yang Maha Pengasih", "B. Yang Maha Penyayang", "C. Yang Maha Suci", "D. Yang Maha Esa"], answer: 0 },
+        { q: "8. Kasih sayang Allah khusus diberikan kepada hamba-Nya yang beriman di akhirat, sifat ini dinamakan...", options: ["A. Ar-Rahim", "B. Ar-Rahman", "C. As-Salam", "D. Al-Wahhab"], answer: 0 },
+        { q: "9. Allah sumber keselamatan dan kedamaian bagi seluruh makhluk. Hal ini sesuai Asmaulhusna...", options: ["A. As-Salam", "B. Al-Quddus", "C. Al-Aziz", "D. Al-Malik"], answer: 0 },
+        { q: "10. Asmaulhusna Al-Quddus berarti bahwa Allah Swt. Maha...", options: ["A. Suci dari segala kekurangan", "B. Pengasih kepada makhluk", "C. Perkasa tak terkalahkan", "D. Mendengar bisikan hati"], answer: 0 },
+        { q: "11. Allah menciptakan alam semesta dari tiada tanpa bantuan siapa pun karena memiliki sifat...", options: ["A. Al-Kholiq", "B. Al-Ahad", "C. Al-Basyir", "D. Al-'Alim"], answer: 0 },
+        { q: "12. Penegasan bahwa Allah Maha Esa dan tidak memiliki sekutu terdapat dalam sifat...", options: ["A. Al-Ahad", "B. Al-Wahhab", "C. Al-Mukmin", "D. Al-Qayyum"], answer: 0 },
+        { q: "13. Asmaulhusna Al-Wahhab memiliki arti...", options: ["A. Yang Maha Pemberi Karunia", "B. Yang Maha Melihat", "C. Yang Maha Mengetahui", "D. Yang Maha Mematikan"], answer: 0 },
+        { q: "14. Allah melihat segala sesuatu yang tampak maupun tersembunyi karena Allah...", options: ["A. Al-Basyir", "B. As-Syami'", "C. Al-'Alim", "D. Al-Malik"], answer: 0 },
+        { q: "15. Sifat Allah yang Maha Mendengar segala suara hingga bisikan hati dinamakan...", options: ["A. As-Syami'", "B. Al-Basyir", "C. Al-Qawiyyu", "D. Al-Mukmin"], answer: 0 },
+        { q: "16. Pengetahuan Allah meliputi segala hal tanpa batas, hal ini sesuai dengan nama...", options: ["A. Al-'Alim", "B. Al-Baa'its", "C. Al-Mumit", "D. Al-Quddus"], answer: 0 },
+        { q: "17. Asmaulhusna Al-Malik menunjukkan bahwa Allah Swt. adalah...", options: ["A. Raja dan Penguasa Mutlak alam semesta", "B. Memberi rasa aman", "C. Maha Menghidupkan", "D. Maha Membangkitkan"], answer: 0 },
+        { q: "18. Allah memberikan rasa aman dan ketenteraman kepada orang beriman melalui sifat...", options: ["A. Al-Mukmin", "B. As-Salam", "C. Al-Aziz", "D. Al-Qayyum"], answer: 0 },
+        { q: "19. Kekuatan dan kemuliaan Allah tidak pernah terkalahkan oleh siapa pun karena Allah bersifat...", options: ["A. Al-Aziz", "B. Al-Basyir", "C. Al-Wahhab", "D. Al-Ahad"], answer: 0 },
+        { q: "20. Sifat Al-Qawiyyu menunjukkan bahwa Allah Swt. Maha...", options: ["A. Kuat tanpa batas", "B. Mengetahui rahasia", "C. Suci dari Cela", "D. Memberi rezeki"], answer: 0 },
+        { q: "21. Sifat Allah yang memberikan kehidupan kepada seluruh makhluk dari tiada dinamakan...", options: ["A. Al-Muhyi", "B. Al-Mumit", "C. Al-Baa'its", "D. Al-Kholiq"], answer: 0 },
+        { q: "22. Sifat Al-Qayyum berarti Allah Swt. Maha...", options: ["A. Berdiri Sendiri tanpa tergantung pada makhluk", "B. Pengasih", "C. Perkasa", "D. Mendengar"], answer: 0 },
+        { q: "23. Allah akan membangkitkan seluruh manusia dari kubur pada hari kiamat melalui sifat...", options: ["A. Al-Baa'its", "B. Al-Mumit", "C. Al-Muhyi", "D. Al-Malik"], answer: 0 },
+        { q: "24. Kematian setiap makhluk di dunia telah ditentukan oleh Allah Swt. yang memiliki sifat...", options: ["A. Al-Mumit", "B. Al-Muhyi", "C. Al-Qayyum", "D. Al-Quddus"], answer: 0 },
+        { q: "25. Seseorang yang meyakini Rukun Iman kedua akan senantiasa merasa diawasi oleh...", options: ["A. Malaikat Raqib dan Atid", "B. Jin", "C. Manusia lain", "D. Pemerintah"], answer: 0 },
+        { q: "26. Meneladani sifat Ar-Rahman dalam kehidupan harian dapat dilakukan dengan cara...", options: ["A. Mengasihi sesama teman dan makhluk hidup", "B. Memilih-milih teman yang kaya", "C. Bersikap sombong atas kelebihan", "D. Menyimpan harta untuk diri sendiri"], answer: 0 },
+        { q: "27. Meneladani Asmaulhusna Al-Quddus dapat diwujudkan dengan...", options: ["A. Menjaga kebersihan hati, pikiran, dan pakaian", "B. Memamerkan kepandain di kelas", "C. Menuntut ilmu tinggi", "D. Bekerja tanpa istirahat"], answer: 0 },
+        { q: "28. Seseorang yang meneladani sifat Al-Ahad akan menjauhi perbuatan...", options: ["A. Syirik atau menyekutukan Allah", "B. Bersedekah", "C. Berbohong", "D. Malas belajar"], answer: 0 },
+        { q: "29. Rasa aman di lingkungan sekolah dapat diwujudkan dengan meneladani Asmaulhusna...", options: ["A. Al-Mukmin", "B. Al-Mumit", "C. Al-Kholiq", "D. Al-Basyir"], answer: 0 },
+        { q: "30. Berikhtiar sungguh-sungguh lalu berserah diri atas hasil takdir Allah disebut...", options: ["A. Tawakal", "B. Takabur", "C. Riya", "D. Qana'ah"], answer: 0 },
+        { q: "31. Kitab Injil diturunkan kepada Rasul...", options: ["A. Nabi Isa a.s.", "B. Nabi Musa a.s.", "C. Nabi Ibrahim a.s.", "D. Nabi Daud a.s."], answer: 0 },
+        { q: "32. Sifat Allah yang tidak memerlukan bantuan siapa pun dalam mengurus alam semesta adalah bukti dari sifat...", options: ["A. Al-Qayyum", "B. Ar-Rahim", "C. Al-Basyir", "D. As-Syami'"], answer: 0 },
+        { q: "33. Keadaan alam semesta hancur lebur pada hari akhir merupakan takdir Allah yang berhubungan dengan Rukun Iman ke-...", options: ["A. 5", "B. 4", "C. 3", "D. 2"], answer: 0 },
+        { q: "34. Malaikat pencatat amal baik manusia adalah...", options: ["A. Raqib", "B. Atid", "C. Munkar", "D. Nakir"], answer: 0 },
+        { q: "35. Meyakini adanya takdir baik dan takdir buruk melatih seorang muslim untuk bersifat...", options: ["A. Sabar dan bersyukur", "B. Sombong dan pesimis", "C. Putus asa", "D. Acuh tak acuh"], answer: 0 },
+        { q: "36. Pengertian dari Asmaulhusna secara bahasa adalah...", options: ["A. Nama-nama Allah yang indah dan baik", "B. Firman Allah", "C. Kitab suci Allah", "D. Mukjizat nabi"], answer: 0 },
+        { q: "37. Allah Maha Melihat setiap perbuatan hamba-Nya walau di tempat tersembunyi. Hal ini pengamalan Asmaulhusna...", options: ["A. Al-Basyir", "B. As-Syami'", "C. Al-Malik", "D. Al-Wahhab"], answer: 0 },
+        { q: "38. Jumlah Asmaulhusna yang dimiliki Allah Swt. adalah...", options: ["A. 99", "B. 100", "C. 66", "D. 25"], answer: 0 },
+        { q: "39. Nabi Muhammad Saw. adalah rasul terakhir, yang dijuluki sebagai...", options: ["A. Khataman Nabiyyin", "B. Khalilullah", "C. Ulul Azmi", "D. Karramallahu Wajhah"], answer: 0 },
+        { q: "40. Mengakui bahwa semua rezeki yang didapatkan berasal dari pemberian Allah adalah pengamalan sifat...", options: ["A. Al-Wahhab", "B. Al-Aziz", "C. Al-Quddus", "D. As-Salam"], answer: 0 }
+      ],
+      "C": [
+        { q: "1. Berkata dan berbuat sesuai fakta atau kenyataan sebenarnya disebut...", options: ["A. Jujur", "B. Sabar", "C. Disiplin", "D. Hemat"], answer: 0 },
+        { q: "2. Mampu menahan diri dalam menghadapi kesulitan atau ujian dinamakan...", options: ["A. Sabar", "B. Mandiri", "C. Tawadhu", "D. Simpati"], answer: 0 },
+        { q: "3. Menjalankan aturan dan hadir tepat waktu merupakan cerminan dari sikap...", options: ["A. Disiplin", "B. Toleransi", "C. Salam", "D. Ikhlas"], answer: 0 },
+        { q: "4. Peduli dan mencintai sesama makhluk ciptaan Allah dinamakan sikap...", options: ["A. Kasih sayang", "B. Mandiri", "C. Riya", "D. Hemat"], answer: 0 },
+        { q: "5. Membantu teman yang tertimpa musibah dalam hal kebaikan disebut...", options: ["A. Tolong-menolong", "B. Riya", "C. Percaya diri", "D. Syukur"], answer: 0 },
+        { q: "6. Menghormati orang yang lebih tua saat bersikap dan berbicara disebut sikap...", options: ["A. Sopan dan santun", "B. Mandiri", "C. Disiplin", "D. Hemat"], answer: 0 },
+        { q: "7. Mampu melakukan pekerjaan sendiri tanpa menggantungkan diri pada orang lain adalah...", options: ["A. Mandiri", "B. Percaya diri", "C. Ikhlas", "D. Tawadhu"], answer: 0 },
+        { q: "8. Yakin terhadap kemampuan diri sendiri yang diberikan Allah dinamakan...", options: ["A. Percaya diri", "B. Sombong", "C. Riya", "D. Simpati"], answer: 0 },
+        { q: "9. Berani menanggung risiko dari perbuatan yang telah dilakukan dinamakan sikap...", options: ["A. Tanggung jawab", "B. Percaya diri", "C. Sabar", "D. Disiplin"], answer: 0 },
+        { q: "10. Sikap rendah hati dan tidak sombong meskipun memiliki kelebihan dinamakan...", options: ["A. Tawadhu", "B. Takabur", "C. Riya", "D. Hemat"], answer: 0 },
+        { q: "11. Berterima kasih atas segala nikmat yang diberikan Allah dinamakan sikap...", options: ["A. Bersyukur", "B. Tawadhu", "C. Ikhlas", "D. Simpati"], answer: 0 },
+        { q: "12. Mengerjakan sesuatu amal ibadah semata-mata karena mengharap ridha Allah disebut...", options: ["A. Ikhlas", "B. Riya", "C. Sum'ah", "D. Takabur"], answer: 0 },
+        { q: "13. Menggunakan uang saku atau barang secara tidak berlebihan disebut...", options: ["A. Hemat", "B. Pelit", "C. Boros", "D. Sederhana"], answer: 0 },
+        { q: "14. Menghargai perbedaan pendapat dan suku/agama teman dinamakan sikap...", options: ["A. Toleransi", "B. Simpati", "C. Salam", "D. Mandiri"], answer: 0 },
+        { q: "15. Turut merasakan kesedihan yang dialami oleh orang lain disebut sikap...", options: ["A. Simpati", "B. Toleransi", "C. Tawadhu", "D. Percaya diri"], answer: 0 },
+        { q: "16. Mengucapkan ucapan 'Assalamu'alaikum' saat bertemu teman merupakan bentuk...", options: ["A. Menebarkan salam dan doa keselamatan", "B. Kewajiban yang membebani", "C. Perintah adab makan", "D. Syarat sah salat"], answer: 0 },
+        { q: "17. Beribadah atau beramal saleh dengan tujuan ingin dipuji orang lain disebut...", options: ["A. Riya", "B. Ikhlas", "C. Tawadhu", "D. Syukur"], answer: 0 },
+        { q: "18. Berikut ini yang BUKAN merupakan ciri-ciri orang munafik menurut hadis Nabi adalah...", options: ["A. Apabila berjanji ia menepati", "B. Apabila berkata ia berdusta", "C. Apabila berjanji ia mengingkari", "D. Apabila dipercaya ia berkhianat"], answer: 0 },
+        { q: "19. Jumlah tanda-tanda orang munafik menurut hadis riwayat Bukhari dan Muslim adalah...", options: ["A. 3 tanda", "B. 4 tanda", "C. 5 tanda", "D. 2 tanda"], answer: 0 },
+        { q: "20. Ciri orang munafik saat diberi amanah atau kepercayaan adalah...", options: ["A. Berkhianat", "B. Menepati", "C. Berdusta", "D. Mengingkari"], answer: 0 },
+        { q: "21. Mengembalikan sisa uang belanja kepada orang tua merupakan contoh perbuatan...", options: ["A. Jujur", "B. Disiplin", "C. Sabar", "D. Hemat"], answer: 0 },
+        { q: "22. Tidak marah saat diejek dan membalasnya dengan kebaikan merupakan bentuk sikap...", options: ["A. Sabar", "B. Percaya diri", "C. Mandiri", "D. Tanggung jawab"], answer: 0 },
+        { q: "23. Merapikan tempat tidur dan menyiapkan jadwal pelajaran sendiri menunjukkan sikap...", options: ["A. Mandiri", "B. Toleransi", "C. Simpati", "D. Riya"], answer: 0 },
+        { q: "24. Menyisihkan sebagian uang saku untuk ditabung termasuk pengamalan sifat...", options: ["A. Hemat", "B. Pelit", "C. Riya", "D. Mandiri"], answer: 0 },
+        { q: "25. Sikap yang tepat saat melihat teman jatuh dari sepeda adalah...", options: ["A. Menolong dan membawanya ke UKS", "B. Mentertawakannya", "C. Mengabaikannya", "D. Pura-pura tidak tahu"], answer: 0 },
+        { q: "26. Menjaga kebersihan kelas sesuai jadwal piket yang disepakati adalah bentuk...", options: ["A. Tanggung jawab", "B. Simpati", "C. Tawadhu", "D. Hemat"], answer: 0 },
+        { q: "27. Mengucapkan kalimat 'Alhamdulillah' saat mendapat nikmat adalah wujud dari...", options: ["A. Bersyukur", "B. Ikhlas", "C. Toleransi", "D. Sabar"], answer: 0 },
+        { q: "28. Lawan dari sifat jujur adalah...", options: ["A. Dusta / Bohong", "B. Khianat", "C. Sombong", "D. Dengki"], answer: 0 },
+        { q: "29. Mel Melaksanakan tugas dari guru tanpa mengharapkan imbalan materi menunjukkan sikap...", options: ["A. Ikhlas", "B. Riya", "C. Disiplin", "D. Mandiri"], answer: 0 },
+        { q: "30. Berani tampil di depan kelas untuk membacakan puisi menunjukkan sikap...", options: ["A. Percaya diri", "B. Sombong", "C. Riya", "D. Mandiri"], answer: 0 },
+        { q: "31. Lawan dari sifat tawadhu (rendah hati) adalah...", options: ["A. Takabur / Sombong", "B. Riya", "C. Dusta", "D. Dengki"], answer: 0 },
+        { q: "32. Mendoakan keselamatan teman saat bertemu merupakan hikmah dari kebiasaan...", options: ["A. Mengucapkan salam", "B. Menolong teman", "C. Berbuat jujur", "D. Bersikap hemat"], answer: 0 },
+        { q: "33. Sikap tidak membeda-bedakan teman yang berbeda agama atau suku disebut...", options: ["A. Toleransi", "B. Simpati", "C. Mandiri", "D. Disiplin"], answer: 0 },
+        { q: "34. Pamer keberhasilan di media sosial agar dipuji orang banyak merupakan perbuatan...", options: ["A. Riya", "B. Syukur", "C. Percaya diri", "D. Tawadhu"], answer: 0 },
+        { q: "35. Apabila kita berjanji kepada seseorang, kewajiban kita adalah...", options: ["A. Menepatinya", "B. Mengingkarinya", "C. Lupa padanya", "D. Mengabaikannya"], answer: 0 },
+        { q: "36. Menyampaikan amanah titipan pesan orang tua kepada guru secara utuh adalah sikap...", options: ["A. Jujur dan bertanggung jawab", "B. Mandiri", "C. Disiplin", "D. Hemat"], answer: 0 },
+        { q: "37. Akibat buruk dari sifat boros dijelaskan dalam Al-Qur'an bahwa pemboros adalah saudara...", options: ["A. Setan", "B. Pembohong", "C. Orang munafik", "D. Orang zalim"], answer: 0 },
+        { q: "38. Kebiasaan datang ke sekolah tepat waktu sebelum bel berbunyi melatih sikap...", options: ["A. Disiplin", "B. Simpati", "C. Hemat", "D. Tawadhu"], answer: 0 },
+        { q: "39. Mendoakan orang yang bersin dengan ucapan 'Yarhamukallah' merupakan bentuk...", options: ["A. Akhlak terpuji dan kasih sayang", "B. Perintah kewajiban salat", "C. Syarat sah wudu", "D. Pembatalan puasa"], answer: 0 },
+        { q: "40. Menghindari pembicaraan gosip atau kebohongan adalah bentuk menjaga akhlak dari sifat...", options: ["A. Dusta dan fitnah", "B. Hemat", "C. Disiplin", "D. Tawadhu"], answer: 0 }
+      ],
+      "D": [
+        { q: "1. Rukun Islam yang pertama adalah...", options: ["A. Syahadatain", "B. Salat", "C. Zakat", "D. Puasa"], answer: 0 },
+        { q: "2. Ibadah wajib lima waktu sehari semalam merupakan Rukun Islam ke-...", options: ["A. 2", "B. 1", "C. 3", "D. 4"], answer: 0 },
+        { q: "3. Mengeluarkan sebagian harta yang telah memenuhi syarat kepada delapan golongan berhak disebut...", options: ["A. Zakat", "B. Sedekah", "C. Hadiah", "D. Pajak"], answer: 0 },
+        { q: "4. Menahan diri dari makan, minum, dan hal yang membatalkan dari fajar hingga magrib disebut...", options: ["A. Puasa", "B. Zikir", "C. Itikaf", "D. Thaharah"], answer: 0 },
+        { q: "5. Ibadah mengunjungi Ka'bah di Mekah bagi yang mampu dilaksanakan sekali seumur hidup yaitu...", options: ["A. Haji", "B. Umrah", "C. Ziarah", "D. Silaturahmi"], answer: 0 },
+        { q: "6. Bersuci dari najis dan hadas dalam ajaran Islam dinamakan...", options: ["A. Thaharah", "B. Istinja", "C. Tayamum", "D. Wudu"], answer: 0 },
+        { q: "7. Air kencing bayi laki-laki di bawah usia 2 tahun yang hanya minum ASI termasuk najis...", options: ["A. Mukhaffafah (Ringan)", "B. Mutawassitah (Sedang)", "C. Mughallazah (Berat)", "D. Ma'fu (Dimaafkan)"], answer: 0 },
+        { q: "8. Cara menyucikan najis Mukhaffafah adalah dengan...", options: ["A. Mempercikkan air bersih pada bagian yang terkena", "B. Mencuci 7 kali salah satunya dengan tanah", "C. Basuh hingga hilang bau, rasa, dan warnanya", "D. Mandi wajib"], answer: 0 },
+        { q: "9. Darah, nanah, dan kotoran manusia/hewan tergolong dalam jenis najis...", options: ["A. Mutawassitah", "B. Mukhaffafah", "C. Mughallazah", "D. Berat"], answer: 0 },
+        { q: "10. Najis berat (Mughallazah) contohnya terkena air liur...", options: ["A. Anjing atau babi", "B. Kucing", "C. Ayam", "D. Kambing"], answer: 0 },
+        { q: "11. Cara menyucikan Najis Mughallazah adalah mencuci dengan air sebanyak 7 kali, yang salah satunya dicampur dengan...", options: ["A. Tanah/Debu", "B. Sabun mandi", "C. Alkohol", "D. Minyak wangi"], answer: 0 },
+        { q: "12. Hadas kecil dapat disucikan dengan cara...", options: ["A. Berwudu atau tayamum", "B. Mandi wajib", "C. Mencuci pakaian", "D. Beristighfar"], answer: 0 },
+        { q: "13. Keadaan tidak suci yang cara menyucikannya harus dengan mandi wajib dinamakan...", options: ["A. Hadas besar", "B. Hadas kecil", "C. Najis mutawassitah", "D. Najis ringan"], answer: 0 },
+        { q: "14. Contoh peristiwa yang menyebabkan seseorang berhadas kecil adalah...", options: ["A. Buang air kecil atau buang angin", "B. Haid bagi wanita", "C. Mimpi basah bagi laki-laki", "D. Meninggal dunia"], answer: 0 },
+        { q: "15. Mengingat Allah Swt. dengan membaca kalimat-kalimat tayibah dinamakan...", options: ["A. Zikir", "B. Doa", "C. Salat", "D. Khotbah"], answer: 0 },
+        { q: "16. Memohon sesuatu kebaikan kepada Allah Swt. dinamakan...", options: ["A. Doa", "B. Zikir", "C. Tasbih", "D. Takbir"], answer: 0 },
+        { q: "17. Kalimat tayibah 'Subhanallah' disebut juga bacaan...", options: ["A. Tasbih", "B. Tahmid", "C. Takbir", "D. Tahlil"], answer: 0 },
+        { q: "18. Kalimat tayibah 'Alhamdulillah' disebut juga bacaan...", options: ["A. Tahmid", "B. Tasbih", "C. Takbir", "D. Hauqalah"], answer: 0 },
+        { q: "19. Tanda utama baligh bagi anak laki-laki adalah mengalami...", options: ["A. Ihtilam (mimpi basah)", "B. Haid", "C. Suara merdu", "D. Tinggi badan bertambah"], answer: 0 },
+        { q: "20. Tanda utama baligh bagi anak perempuan adalah...", options: ["A. Haid", "B. Tumbuh kumis", "C. Mimpi basah", "D. Suara membesar"], answer: 0 },
+        { q: "21. Seseorang yang telah mencapai usia baligh dan berakal sehat dinamakan...", options: ["A. Mukalaf", "B. Mualaf", "C. Mustahiq", "D. Munafik"], answer: 0 },
+        { q: "22. Hukum taklifi bagi perbuatan yang apabila dikerjakan mendapat pahala, dan ditinggalkan berdosa adalah...", options: ["A. Wajib", "B. Sunnah", "C. Haram", "D. Makruh"], answer: 0 },
+        { q: "23. Perbuatan yang dianjurkan untuk dikerjakan (mendapat pahala), namun jika ditinggalkan tidak berdosa dinamakan...", options: ["A. Sunnah", "B. Wajib", "C. Mubah", "D. Makruh"], answer: 0 },
+        { q: "24. Perbuatan yang dilarang keras dan jika dikerjakan mendapat dosa dinamakan...", options: ["A. Haram", "B. Makruh", "C. Mubah", "D. Sunnah"], answer: 0 },
+        { q: "25. Perbuatan yang sebaiknya ditinggalkan, namun jika dikerjakan tidak berdosa dinamakan...", options: ["A. Makruh", "B. Haram", "C. Mubah", "D. Wajib"], answer: 0 },
+        { q: "26. Perbuatan yang boleh dikerjakan atau ditinggalkan tanpa pengaruh pahala dan dosa dinamakan...", options: ["A. Mubah", "B. Sunnah", "C. Makruh", "D. Wajib"], answer: 0 },
+        { q: "27. Salat sunah yang dikerjakan pada pagi hari saat matahari mulai naik hingga menjelang zuhur adalah...", options: ["A. Salat Duha", "B. Salat Tahajud", "C. Salat Witir", "D. Salat Tarawih"], answer: 0 },
+        { q: "28. Keutamaan mengerjakan salat Duha adalah sebagai wujud syukur dan memohon kebaikan...", options: ["A. Rezeki", "B. Keturunan", "C. Jabatan", "D. Hujan"], answer: 0 },
+        { q: "29. Salat sunah yang dilaksanakan pada sepertiga malam terakhir setelah bangun tidur adalah...", options: ["A. Salat Tahajud", "B. Salat Duha", "C. Salat Rawatib", "D. Salat Istikharah"], answer: 0 },
+        { q: "30. Hukum melaksanakan salat Jumat bagi laki-laki muslim dewasa yang menetap adalah...", options: ["A. Fardu Ain (Wajib)", "B. Sunnah Muakkad", "C. Mubah", "D. Fardu Kifayah"], answer: 0 },
+        { q: "31. Salat Jumat dilaksanakan secara berjamaah sebanyak ... rakaat menggantikan salat zuhur.", options: ["A. 2 rakaat", "B. 4 rakaat", "C. 3 rakaat", "D. 1 rakaat"], answer: 0 },
+        { q: "32. Pengganti wudu saat tidak ada air atau dalam kondisi sakit adalah...", options: ["A. Tayamum", "B. Mandi", "C. Istinja", "D. Bersilaturahmi"], answer: 0 },
+        { q: "33. Media yang digunakan untuk melakukan tayamum adalah...", options: ["A. Debu / Tanah yang suci", "B. Air kelapa", "C. Batu basah", "D. Tisu basah"], answer: 0 },
+        { q: "34. Kalimat tahlil bunyi lafaznya adalah...", options: ["A. Laa ilaaha illallah", "B. Allahu Akbar", "C. Subhanallah", "D. Alhamdulillah"], answer: 0 },
+        { q: "35. Rukun wudu yang pertama adalah...", options: ["A. Niat", "B. Membasuh muka", "C. Membasuh tangan", "D. Mengusap kepala"], answer: 0 },
+        { q: "36. Salah satu hal yang membatalkan wudu adalah...", options: ["A. Buang angin / Kentut", "B. Makan buah", "C. Berbicara", "D. Tertawa biasa"], answer: 0 },
+        { q: "37. Pengertian bersuci secara istilah fikih disebut...", options: ["A. Thaharah", "B. Najis", "C. Hadas", "D. Mutanajjis"], answer: 0 },
+        { q: "38. Salat sunah pendamping salat fardu yang dikerjakan sebelum atau sesudahnya dinamakan...", options: ["A. Salat Rawatib", "B. Salat Duha", "C. Salat Tahajud", "D. Salat Witir"], answer: 0 },
+        { q: "39. Mendengarkan khotbah Jumat bagi jamaah salat Jumat hukumnya...", options: ["A. Wajib / Diperintahkan", "B. Mubah", "C. Haram", "D. Makruh"], answer: 0 },
+        { q: "40. Batas minimal usia anak yang tidak mengalami tanda fisik untuk dinyatakan baligh adalah...", options: ["A. 15 tahun", "B. 10 tahun", "C. 12 tahun", "D. 17 tahun"], answer: 0 }
+      ],
+      "E": [
+        { q: "1. Manusia pertama sekaligus nabi pertama yang diciptakan Allah Swt. adalah...", options: ["A. Nabi Adam a.s.", "B. Nabi Nuh a.s.", "C. Nabi Ibrahim a.s.", "D. Nabi Idris a.s."], answer: 0 },
+        { q: "2. Keteladanan utama dari Nabi Adam a.s. yang patut ditiru adalah...", options: ["A. Bertaubat dengan sungguh-sungguh saat bersalah", "B. Membangun bahtera besar", "C. Keberanian melawan raja zalim", "D. Ketahanan berada di dalam perut ikan"], answer: 0 },
+        { q: "3. Nabi yang diberi mukjizat membuat kapal besar atas perintah Allah untuk menyelamatkan umatnya dari banjir adalah...", options: ["A. Nabi Nuh a.s.", "B. Nabi Hud a.s.", "C. Nabi Saleh a.s.", "D. Nabi Musa a.s."], answer: 0 },
+        { q: "4. Nabi yang dikenal sangat cerdas, pandai menulis, menjahit, dan ahli ilmu pengetahuan adalah...", options: ["A. Nabi Idris a.s.", "B. Nabi Adam a.s.", "C. Nabi Ilyas a.s.", "D. Nabi Yahya a.s."], answer: 0 },
+        { q: "5. Nabi Saleh a.s. diutus oleh Allah Swt. untuk berdakwah kepada kaum...", options: ["A. Samud", "B. 'Ad", "C. Madyan", "D. Israil"], answer: 0 },
+        { q: "6. Mukjizat utama Nabi Saleh a.s. yang diberikan Allah adalah...", options: ["A. Unta betina yang keluar dari celah batu", "B. Tongkat berubah menjadi ular", "C. Membelah lautan", "D. Menyembuhkan penyakit kusta"], answer: 0 },
+        { q: "7. Nabi Ishaq a.s. adalah putra dari Nabi...", options: ["A. Ibrahim a.s.", "B. Nuh a.s.", "C. Ya'qub a.s.", "D. Sulaiman a.s."], answer: 0 },
+        { q: "8. Nabi yang terkenal sangat pemaaf kepada saudara-saudaranya meskipun pernah dimasukkan ke sumur adalah...", options: ["A. Nabi Yusuf a.s.", "B. Nabi Yunus a.s.", "C. Nabi Yahya a.s.", "D. Nabi Musa a.s."], answer: 0 },
+        { q: "9. Nabi Syu'aib a.s. berdakwah kepada kaum Madyan agar berlaku jujur dalam...", options: ["A. Menimbang dan berdagang", "B. Membangun rumah", "C. Berperang", "D. Bertani"], answer: 0 },
+        { q: "10. Gelar 'Khalilullah' (Kekasih Allah) diberikan kepada Nabi...", options: ["A. Ibrahim a.s.", "B. Muhammad Saw.", "C. Musa a.s.", "D. Isa a.s."], answer: 0 },
+        { q: "11. Putera Nabi Ibrahim a.s. yang menunjukkan keteladanan kepatuhan luar biasa saat hendak disembelih adalah...", options: ["A. Nabi Ismail a.s.", "B. Nabi Ishaq a.s.", "C. Nabi Yusuf a.s.", "D. Nabi Ya'qub a.s."], answer: 0 },
+        { q: "12. Nabi Musa a.s. diutus untuk berdakwah menghadapi raja yang sombong bernama...", options: ["A. Firaun", "B. Namrud", "C. Jalut", "D. Abu Lahab"], answer: 0 },
+        { q: "13. Mukjizat membelah Laut Merah dimiliki oleh Nabi...", options: ["A. Musa a.s.", "B. Isa a.s.", "C. Ibrahim a.s.", "D. Sulaiman a.s."], answer: 0 },
+        { q: "14. Nabi yang dianugerahi kerajaan besar dan kemampuan memahami bahasa hewan adalah...", options: ["A. Nabi Sulaiman a.s.", "B. Nabi Daud a.s.", "C. Nabi Yusuf a.s.", "D. Nabi Yunus a.s."], answer: 0 },
+        { q: "15. Kitab Zabur dan anugerah suara yang sangat merdu diberikan kepada Nabi...", options: ["A. Daud a.s.", "B. Isa a.s.", "C. Musa a.s.", "D. Ilyas a.s."], answer: 0 },
+        { q: "16. Kitab Injil diturunkan kepada Nabi...", options: ["A. Isa a.s.", "B. Musa a.s.", "C. Daud a.s.", "D. Muhammad Saw."], answer: 0 },
+        { q: "17. Nabi Muhammad Saw. diutus Allah sebagai penutup para nabi yang dinamakan...", options: ["A. Khataman Nabiyyin", "B. Ulul Azmi", "C. Khalilullah", "D. Habibullah"], answer: 0 },
+        { q: "18. Khalifah pertama yang menggantikan kepemimpinan Islam setelah Rasulullah wafat adalah...", options: ["A. Abu Bakar Ash-Shiddiq", "B. Umar bin Khattab", "C. Utsman bin Affan", "D. Ali bin Abi Thalib"], answer: 0 },
+        { q: "19. Gelar 'Ash-Shiddiq' yang diberikan kepada Abu Bakar memiliki arti...", options: ["A. Yang membenarkan / Jujur", "B. Pemisah kebenaran", "C. Dermawan", "D. Bintang ilmu"], answer: 0 },
+        { q: "20. Sahabat Nabi yang terkenal tegas, adil, dan berhasil memperluas wilayah Islam adalah Khulafaur Rasyidin ke-2 yaitu...", options: ["A. Umar bin Khattab", "B. Abu Bakar", "C. Utsman bin Affan", "D. Ali bin Abi Thalib"], answer: 0 },
+        { q: "21. Sahabat Nabi yang sangat dermawan dan membukukan mushaf Al-Qur'an secara resmi adalah...", options: ["A. Utsman bin Affan", "B. Ali bin Abi Thalib", "C. Umar bin Khattab", "D. Abu Bakar"], answer: 0 },
+        { q: "22. Khalifah keempat yang terkenal sangat cerdas, berani, dan merupakan sepupu Rasulullah adalah...", options: ["A. Ali bin Abi Thalib", "B. Utsman bin Affan", "C. Abu Bakar", "D. Umar bin Khattab"], answer: 0 },
+        { q: "23. Gelar 'Al-Faruq' (Pembeda antara yang benar dan salah) dimiliki oleh khalifah...", options: ["A. Umar bin Khattab", "B. Abu Bakar", "C. Utsman bin Affan", "D. Ali bin Abi Thalib"], answer: 0 },
+        { q: "24. Sahabat Utsman bin Affan mendapat julukan 'Dzun Nurain' yang artinya...", options: ["A. Pemilik dua cahaya", "B. Pemilik kebenaran", "C. Pedang Allah", "D. Singa padang pasir"], answer: 0 },
+        { q: "25. Paman Nabi Muhammad Saw. yang selalu melindungi dakwah beliau di Mekah bernama...", options: ["A. Abu Talib", "B. Abu Lahab", "C. Abu Jahal", "D. Abbas"], answer: 0 },
+        { q: "26. Istri pertama Nabi Muhammad Saw. yang selalu mendukung dakwah Islam dengan harta dan jiwanya adalah...", options: ["A. Khadijah binti Khuwailid", "B. Aisyah binti Abu Bakar", "C. Fatimah az-Zahra", "D. Hafsah binti Umar"], answer: 0 },
+        { q: "27. Peristiwa hijrah Nabi Muhammad Saw. dilakukan dari kota Mekah menuju kota...", options: ["A. Madinah (Yatsrib)", "B. Taif", "C. Yerusalem", "D. Mesir"], answer: 0 },
+        { q: "28. Nabi yang diuji dengan penyakit kulit bertahun-tahun namun tetap sangat sabar adalah...", options: ["A. Nabi Ayyub a.s.", "B. Nabi Yunus a.s.", "C. Nabi Zakaria a.s.", "D. Nabi Harun a.s."], answer: 0 },
+        { q: "29. Nabi Yunus a.s. pernah ditelan oleh hewan besar yaitu...", options: ["A. Ikan Nun / Ikan Paus", "B. Ular Raksasa", "C. Unta", "D. Burung Ababil"], answer: 0 },
+        { q: "30. Pasukan bergajah yang ingin menghancurkan Ka'bah dihancurkan oleh Allah dengan burung...", options: ["A. Ababil", "B. Garuda", "C. Hudhud", "D. Merpati"], answer: 0 },
+        { q: "31. Nabi yang mampu melunakkan besi dengan tangan kosong adalah Nabi...", options: ["A. Daud a.s.", "B. Sulaiman a.s.", "C. Musa a.s.", "D. Ibrahim a.s."], answer: 0 },
+        { q: "32. Putra Nabi Nuh a.s. yang durhaka dan tenggelam oleh air bah bernama...", options: ["A. Kan'an", "B. Sam", "C. Ham", "D. Yafet"], answer: 0 },
+        { q: "33. Kota kelahiran Nabi Muhammad Saw. adalah...", options: ["A. Mekah", "B. Madinah", "C. Jeddah", "D. Taif"], answer: 0 },
+        { q: "34. Nabi Muhammad Saw. lahir pada tanggal 12 Rabiul Awal di tahun yang dikenal sebagai...", options: ["A. Tahun Gajah", "B. Tahun Hijrah", "C. Tahun Duka Cita", "D. Tahun Kemenangan"], answer: 0 },
+        { q: "35. Ayahanda Nabi Muhammad Saw. bernama...", options: ["A. Abdullah", "B. Abdul Muttalib", "C. Abu Talib", "D. Hamzah"], answer: 0 },
+        { q: "36. Ibunda Nabi Muhammad Saw. bernama...", options: ["A. Aminah", "B. Halimah", "C. Fatimah", "D. Ruqayyah"], answer: 0 },
+        { q: "37. Ibu pengasuh yang menyusui Nabi Muhammad Saw. sewaktu kecil di desa adalah...", options: ["A. Halimah As-Sa'diyyah", "B. Ummu Aiman", "C. Khadijah", "D. Tsauyibah"], answer: 0 },
+        { q: "38. Gelar 'Al-Amin' yang disandang Nabi Muhammad Saw. sejak muda artinya...", options: ["A. Orang yang terpercaya", "B. Orang yang cerdas", "C. Pemimpin yang adil", "D. Yang dihormati"], answer: 0 },
+        { q: "39. Tempat Nabi Muhammad Saw. menerima wahyu pertama kali (Surah Al-'Alaq 1-5) adalah...", options: ["A. Gua Hira", "B. Gua Tsur", "C. Padang Arafah", "D. Masjidil Haram"], answer: 0 },
+        { q: "40. Wahyu pertama disampaikan kepada Nabi Muhammad Saw. melalui malaikat...", options: ["A. Jibril", "B. Mikail", "C. Israfil", "D. Izrail"], answer: 0 }
+      ],
+      "F": [
+        { q: "1. Bulan pertama dalam urutan kalender Hijriah adalah...", options: ["A. Muharram", "B. Ramadan", "C. Syawal", "D. Zulhijah"], answer: 0 },
+        { q: "2. Bulan kesembilan dalam kalender Hijriah yang di dalamnya umat Islam diwajibkan berpuasa adalah...", options: ["A. Ramadan", "B. Rajab", "C. Sya'ban", "D. Muharram"], answer: 0 },
+        { q: "3. Hari raya umat Islam yang dirayakan setelah menyelesaikan puasa Ramadan adalah...", options: ["A. Idulfitri", "B. Iduladha", "C. Tahun Baru Hijriah", "D. Maulid Nabi"], answer: 0 },
+        { q: "4. Hari raya pelaksanaan ibadah kurban jatuh pada tanggal 10 bulan...", options: ["A. Zulhijah", "B. Muharram", "C. Syawal", "D. Rajab"], answer: 0 },
+        { q: "5. Peringatan peristiwa perjalanan malam Nabi Muhammad dari Makkah ke Palestina lalu ke Sidratul Muntaha disebut...", options: ["A. Isra Mikraj", "B. Nuzulul Qur'an", "C. Maulid Nabi", "D. Hijrah"], answer: 0 },
+        { q: "6. Peringatan hari lahir Nabi Muhammad Saw. dinamakan...", options: ["A. Maulid Nabi", "B. Isra Mikraj", "C. Nuzulul Qur'an", "D. Tahun Baru Islam"], answer: 0 },
+        { q: "7. Peringatan turunnya Al-Qur'an pertama kali biasa diperingati setiap tanggal 17...", options: ["A. Ramadan", "B. Muharram", "C. Rajab", "D. Zulhijah"], answer: 0 },
+        { q: "8. Panggilan atau seruan sebagai tanda masuknya waktu salat dinamakan...", options: ["A. Azan", "B. Ikamah", "C. Khotbah", "D. Takbiratul Ihram"], answer: 0 },
+        { q: "9. Seruan / panggilan singkat yang menandakan salat berjamaah akan segera dimulai dinamakan...", options: ["A. Ikamah", "B. Azan", "C. Tasbih", "D. Zikir"], answer: 0 },
+        { q: "10. Masjid suci yang di dalamnya terdapat bangunan Ka'bah terletak di kota...", options: ["A. Mekah", "B. Madinah", "C. Yerusalem", "D. Kairo"], answer: 0 },
+        { q: "11. Masjid Nabawi adalah masjid suci bersejarah yang terletak di kota...", options: ["A. Madinah", "B. Mekah", "C. Jeddah", "D. Taif"], answer: 0 },
+        { q: "12. Masjid Aqsa merupakan kiblat pertama umat Islam yang terletak di negara...", options: ["A. Palestina", "B. Arab Saudi", "C. Mesir", "D. Turki"], answer: 0 },
+        { q: "13. Arah menghadap umat Islam saat melaksanakan ibadah salat adalah...", options: ["A. Ka'bah di Mekah", "B. Masjid Nabawi", "C. Arah Timur", "D. Arah Barat"], answer: 0 },
+        { q: "14. Adab sebelum dan sesudah makan yang diajarkan Rasulullah adalah membaca...", options: ["A. Basmalah dan Doa", "B. Surah Al-Fatihah", "C. Kalimat Takbir", "D. Syahadat"], answer: 0 },
+        { q: "15. Saat makan dan minum, ajaran Islam menganjurkan kita untuk menggunakan tangan...", options: ["A. Kanan", "B. Kiri", "C. Kedua tangan", "D. Bebas"], answer: 0 },
+        { q: "16. Sebelum belajar, seorang murid hendaknya berdoa memohon ditambahkan...", options: ["A. Ilmu dan pemahaman", "B. Harta benda", "C. Mainan baru", "D. Pujian teman"], answer: 0 },
+        { q: "17. Adab terhadap tetangga dalam ajaran Islam adalah...", options: ["A. Menjaga kerukunan dan saling menghormati", "B. Membuat kegaduhan malam hari", "C. Mengabaikan jika butuh bantuan", "D. Membeda-bedakan statusnya"], answer: 0 },
+        { q: "18. Kalimat tayibah yang diucapkan ketika mendengar musibah atau kabar duka adalah...", options: ["A. Tarji' / Inna lillahi wa inna ilaihi raji'un", "B. Hauqalah", "C. Tasbih", "D. Tahmid"], answer: 0 },
+        { q: "19. Ucapan 'Laa haula walaa quwwata illaa billah' dinamakan bacaan...", options: ["A. Hauqalah", "B. Tarji'", "C. Basmalah", "D. Hamdalah"], answer: 0 },
+        { q: "20. Urutan bulan ke-12 (terakhir) dalam kalender Hijriah adalah...", options: ["A. Zulhijah", "B. Syawal", "C. Sya'ban", "D. Safar"], answer: 0 },
+        { q: "21. Hari Jumat dinamakan 'Sayyidul Ayyam' yang artinya...", options: ["A. Tuannya hari / Hari paling mulia", "B. Hari libur", "C. Hari kemenangan", "D. Hari berduka"], answer: 0 },
+        { q: "22. Tempat berkumpulnya seluruh jemaah haji pada tanggal 9 Zulhijah untuk melaksanakan wukuf adalah...", options: ["A. Padang Arafah", "B. Muzdalifah", "C. Mina", "D. Makkah"], answer: 0 },
+        { q: "23. Kitab Al-Qur'an diturunkan menggunakan bahasa...", options: ["A. Arab", "B. Ibrani", "C. Yunani", "D. Persia"], answer: 0 },
+        { q: "24. Seseorang yang mengumandangkan azan dinamakan...", options: ["A. Muazin", "B. Khatib", "C. Bilal", "D. Imam"], answer: 0 },
+        { q: "25. Pemimpin dalam pelaksanaan salat berjamaah dinamakan...", options: ["A. Imam", "B. Makmum", "C. Muazin", "D. Khotib"], answer: 0 },
+        { q: "26. Orang yang mengikuti gerakan salat di belakang imam dinamakan...", options: ["A. Makmum", "B. Jamaah", "C. Muazin", "D. Murid"], answer: 0 },
+        { q: "27. Pakaian ihram bagi jemaah haji laki-laki terdiri dari ... lembar kain putih tanpa jahitan.", options: ["A. 2", "B. 3", "C. 1", "D. 4"], answer: 0 },
+        { q: "28. Mengelilingi Ka'bah sebanyak 7 kali putaran saat haji atau umrah dinamakan...", options: ["A. Tawaf", "B. Sa'i", "C. Wukuf", "D. Tahallul"], answer: 0 },
+        { q: "29. Berlari-lari kecil antara bukit Shofa dan Marwah sebanyak 7 kali dinamakan...", options: ["A. Sa'i", "B. Tawaf", "C. Wukuf", "D. Mabit"], answer: 0 },
+        { q: "30. Memotong atau mencukur sebagian rambut kepala saat ibadah haji dinamakan...", options: ["A. Tahallul", "B. Tawaf", "C. Sa'i", "D. Ihram"], answer: 0 },
+        { q: "31. Makanan atau minuman yang boleh dikonsumsi menurut hukum Islam dinamakan makanan...", options: ["A. Halal", "B. Haram", "C. Syubhat", "D. Makruh"], answer: 0 },
+        { q: "32. Makanan atau barang yang ragu-ragu kehalalannya dinamakan...", options: ["A. Syubhat", "B. Haram", "C. Makruh", "D. Halal"], answer: 0 },
+        { q: "33. Kitab suci Al-Qur'an terdiri dari ... juz.", options: ["A. 30", "B. 114", "C. 66", "D. 60"], answer: 0 },
+        { q: "34. Jumlah surah yang terdapat dalam Al-Qur'an adalah...", options: ["A. 114", "B. 30", "C. 6666", "D. 99"], answer: 0 },
+        { q: "35. Surah terpanjang dalam Al-Qur'an adalah surah...", options: ["A. Al-Baqarah", "B. Yasin", "C. Al-Imran", "D. An-Nisa"], answer: 0 },
+        { q: "36. Surah terpendek dalam Al-Qur'an adalah surah...", options: ["A. Al-Kautsar", "B. An-Nasr", "C. Al-Ikhlas", "D. Al-Falaq"], answer: 0 },
+        { q: "37. Orang yang menghafal seluruh isi Al-Qur'an dinamakan...", options: ["A. Hafiz / Hafizah", "B. Qari / Qariah", "C. Mualaf", "D. Dai"], answer: 0 },
+        { q: "38. Penanggalan kalender Islam (Hijriah) didasarkan pada peredaran...", options: ["A. Bulan (Komersial/Komariah)", "B. Matahari (Syamsiah)", "C. Bintang", "D. Angin"], answer: 0 },
+        { q: "39. Kalimat tayibah 'Masya Allah' diucapkan ketika melihat sesuatu yang...", options: ["A. Menakjubkan atau indah", "B. Buruk dan kotor", "C. Sedih dan duka", "D. Bencana alam"], answer: 0 },
+        { q: "40. Sikap yang benar saat orang tua sedang berbicara memberikan nasihat adalah...", options: ["A. Mendengarkan dengan tenang dan patuh", "B. Menyela pembicaraannya", "C. Ditinggal pergi", "D. Acuh tak acuh"], answer: 0 }
+      ]
+    };
+
+    let currentUser = { name: "", class: "" };
+    let activeElement = "";
+    let currentIdx = 0;
+    
+    let allUserAnswers = {
+      "A": new Array(40).fill(null),
+      "B": new Array(40).fill(null),
+      "C": new Array(40).fill(null),
+      "D": new Array(40).fill(null),
+      "E": new Array(40).fill(null),
+      "F": new Array(40).fill(null)
+    };
+
+    function saveUserInfo() {
+      const name = document.getElementById('student-name').value.trim();
+      const cls = document.getElementById('student-class').value;
+
+      if (!name || !cls) {
+        alert("Harap isi Nama dan Kelas terlebih dahulu!");
+        return;
+      }
+
+      currentUser.name = name;
+      currentUser.class = cls;
+
+      document.getElementById('user-info-form').classList.add('hidden');
+      document.getElementById('element-selection-area').classList.remove('hidden');
+      document.getElementById('active-user-badge').innerHTML = `<b>Peserta:</b> ${currentUser.name} | <b>Kelas:</b> ${currentUser.class}`;
+
+      renderElementList();
+    }
+
+    function renderElementList() {
+      const container = document.getElementById('element-list');
+      container.innerHTML = "";
+
+      Object.keys(elementsInfo).forEach(key => {
+        const answeredCount = allUserAnswers[key].filter(x => x !== null).length;
+        const isComplete = answeredCount === 40;
+
+        const div = document.createElement('div');
+        div.className = 'element-item';
+        div.innerHTML = `
+          <div>
+            <strong>Elemen ${key}: ${elementsInfo[key]}</strong>
+            <br><small style="color: #6c757d;">Progres: ${answeredCount} dari 40 soal diisi</small>
+          </div>
+          <div>
+            <span class="badge ${isComplete ? 'badge-success' : 'badge-warning'}">${isComplete ? 'Selesai' : 'Belum Selesai'}</span>
+            <button class="btn" style="margin-left: 10px; padding: 6px 12px; font-size: 0.85rem;" onclick="startElement('${key}')">
+              ${answeredCount > 0 ? 'Lanjutkan' : 'Mulai'}
+            </button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function startElement(elemKey) {
+      activeElement = elemKey;
+      currentIdx = 0;
+
+      document.getElementById('dashboard-card').classList.add('hidden');
+      document.getElementById('quiz-card').classList.remove('hidden');
+      document.getElementById('quiz-element-title').innerText = `Elemen ${elemKey}: ${elementsInfo[elemKey]}`;
+
+      loadQuestion();
+      renderGrid();
+    }
+
+    function loadQuestion() {
+      const q = questionBank[activeElement][currentIdx];
+      document.getElementById('q-number').innerText = `Soal ${currentIdx + 1} dari 40`;
+      document.getElementById('q-text').innerText = q.q;
+
+      const optionsUl = document.getElementById('q-options');
+      optionsUl.innerHTML = '';
+
+      const currentAnswers = allUserAnswers[activeElement];
+
+      q.options.forEach((opt, idx) => {
+        const li = document.createElement('li');
+        li.className = 'option-item';
+        
+        const isChecked = currentAnswers[currentIdx] === idx ? 'checked' : '';
+        
+        li.innerHTML = `
+          <label>
+            <input type="radio" name="option" value="${idx}" ${isChecked} onchange="selectOption(${idx})">
+            ${opt}
+          </label>
+        `;
+        optionsUl.appendChild(li);
+      });
+
+      document.getElementById('btn-prev').style.visibility = currentIdx === 0 ? 'hidden' : 'visible';
+      document.getElementById('btn-next').innerText = currentIdx === 39 ? 'Selesai Elemen Ini' : 'Berikutnya';
+
+      updateGridHighlight();
+    }
+
+    function selectOption(optIdx) {
+      allUserAnswers[activeElement][currentIdx] = optIdx;
+      renderGrid();
+    }
+
+    function renderGrid() {
+      const grid = document.getElementById('number-grid');
+      grid.innerHTML = '';
+
+      const currentAnswers = allUserAnswers[activeElement];
+
+      for (let i = 0; i < 40; i++) {
+        const box = document.createElement('div');
+        box.className = 'num-box';
+        box.innerText = i + 1;
+
+        if (currentAnswers[i] !== null) {
+          box.classList.add('answered');
+        }
+
+        if (i === currentIdx) {
+          box.classList.add('active');
+        }
+
+        box.onclick = () => {
+          currentIdx = i;
+          loadQuestion();
+        };
+
+        grid.appendChild(box);
+      }
+    }
+
+    function updateGridHighlight() {
+      const boxes = document.querySelectorAll('.num-box');
+      boxes.forEach((box, idx) => {
+        if (idx === currentIdx) {
+          box.classList.add('active');
+        } else {
+          box.classList.remove('active');
+        }
+      });
+    }
+
+    function nextQuestion() {
+      if (currentIdx < 39) {
+        currentIdx++;
+        loadQuestion();
+      } else {
+        submitCurrentElement();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentIdx > 0) {
+        currentIdx--;
+        loadQuestion();
+      }
+    }
+
+    function returnToDashboard() {
+      document.getElementById('quiz-card').classList.add('hidden');
+      document.getElementById('dashboard-card').classList.remove('hidden');
+      renderElementList();
+    }
+
+    function submitCurrentElement() {
+      const answeredCount = allUserAnswers[activeElement].filter(x => x !== null).length;
+      alert(`Progress Elemen ${activeElement} tersimpan! (${answeredCount} dari 40 diisi)`);
+      returnToDashboard();
+    }
+
+    function submitAllToSheets() {
+      const scores = {};
+      let totalBenar = 0;
+
+      Object.keys(elementsInfo).forEach(elem => {
+        let benar = 0;
+        questionBank[elem].forEach((q, idx) => {
+          if (allUserAnswers[elem][idx] === q.answer) {
+            benar++;
+          }
+        });
+        scores[elem] = Math.round((benar / 40) * 100);
+        totalBenar += benar;
+      });
+
+      const totalSkorAkhir = Math.round((totalBenar / 240) * 100);
+
+      const payload = {
+        nama: currentUser.name,
+        kelas: currentUser.class,
+        skorA: scores["A"],
+        skorB: scores["B"],
+        skorC: scores["C"],
+        skorD: scores["D"],
+        skorE: scores["E"],
+        skorF: scores["F"],
+        totalSkor: totalSkorAkhir,
+        waktu: new Date().toLocaleString('id-ID')
+      };
+
+      if (!SPREADSHEET_WEB_APP_URL || SPREADSHEET_WEB_APP_URL.includes("URL_GOOGLE_APPS_SCRIPT_ANDA_DI_SINI")) {
+        alert("URL Google Apps Script belum dimasukkan di variabel SPREADSHEET_WEB_APP_URL!");
+        return;
+      }
+
+      fetch(SPREADSHEET_WEB_APP_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        alert("Seluruh nilai berhasil dikirim ke Google Sheets! Terima kasih sudah berpartisipasi.");
+        location.reload();
+      })
+      .catch(err => {
+        alert("Gagal mengirim data. Pastikan koneksi internet stabil.");
+      });
+    }
+  </script>
+</body>
+</html>
