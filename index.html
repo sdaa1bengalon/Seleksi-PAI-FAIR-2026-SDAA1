@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seleksi Internal LCC PAI FAIR 2026 - SD Anugerah Abadi 1 Bengalon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --accent: #10b981;
+      --danger: #ef4444;
+      --bg-dark: #0f172a;
+      --glass-bg: rgba(255, 255, 255, 0.95);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --badge-sedang: #d97706;
+      --badge-sukar: #dc2626;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #1e1b4b 100%);
+      min-height: 100vh;
+      color: var(--text);
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .anbk-container {
+      width: 100%;
+      max-width: 950px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .anbk-header {
+      background: rgba(15, 23, 42, 0.95);
+      color: white;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .anbk-header h1 { font-size: 1.1rem; font-weight: 800; color: #60a5fa; letter-spacing: 0.5px; }
+
+    .user-info-bar {
+      background: #e2e8f0;
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #334155;
+      border-bottom: 1px solid #cbd5e1;
+    }
+
+    .login-screen {
+      padding: 40px 24px;
+      max-width: 480px;
+      margin: 0 auto;
+      width: 100%;
+      text-align: center;
+    }
+
+    .login-title { font-size: 1.4rem; font-weight: 800; color: #1e293b; margin-bottom: 6px; }
+    .login-subtitle { font-size: 0.85rem; color: #64748b; margin-bottom: 24px; line-height: 1.4; }
+
+    .form-group { text-align: left; margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 700; color: #334155; margin-bottom: 6px; }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 2px solid #cbd5e1;
+      font-weight: 600;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s;
+      background: white;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+
+    .btn-start {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.2s;
+    }
+
+    .btn-start:hover { background: var(--primary-dark); }
+
+    .elemen-tabs {
+      display: flex;
+      background: rgba(241, 245, 249, 0.8);
+      padding: 10px 16px;
+      gap: 8px;
+      overflow-x: auto;
+      border-bottom: 1px solid #cbd5e1;
+    }
+
+    .tab-btn {
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      background: white;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+
+    .anbk-body {
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 16px;
+      padding: 20px;
+      min-height: 480px;
+    }
+
+    @media (max-width: 800px) { .anbk-body { grid-template-columns: 1fr; } }
+
+    .soal-panel {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .soal-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 10px;
+    }
+
+    .soal-header { font-weight: 800; font-size: 1rem; color: var(--primary-dark); }
+
+    .badge-tingkat {
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 20px;
+      color: white;
+      text-transform: uppercase;
+    }
+
+    .badge-sedang { background-color: var(--badge-sedang); }
+    .badge-sukar { background-color: var(--badge-sukar); }
+
+    .soal-konten { font-size: 0.98rem; line-height: 1.6; margin-bottom: 20px; font-weight: 600; color: #1e293b; }
+
+    .opsi-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .opsi-card {
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .opsi-card:hover { border-color: #93c5fd; background: white; }
+
+    .opsi-card.selected {
+      border-color: var(--primary);
+      background: #eff6ff;
+      color: var(--primary-dark);
+    }
+
+    .opsi-label {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+      font-weight: 800;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .opsi-card.selected .opsi-label { background: var(--primary); color: white; }
+
+    .nav-panel {
+      background: white;
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-title { font-weight: 800; font-size: 0.8rem; margin-bottom: 12px; text-align: center; color: var(--text-muted); text-transform: uppercase; }
+
+    .grid-nomor {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .btn-nomor {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      font-weight: 800;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .btn-nomor.terisi { background: var(--accent); color: white; border-color: var(--accent); }
+    .btn-nomor.active { border: 2.5px solid var(--primary-dark); box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3); }
+
+    .soal-footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      gap: 12px;
+    }
+
+    .btn-nav {
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      background: white;
+    }
+
+    .btn-finish { background: var(--accent); color: white; border: none; margin-top: auto; padding: 12px; text-align: center; width: 100%; border-radius: 10px; font-weight: 800; }
+
+    /* POP-UP MODAL STYLES */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+    .modal-box {
+      background: white;
+      border-radius: 24px;
+      padding: 32px 28px;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .modal-title { font-size: 1.25rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+    .modal-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; }
+
+    .list-kosong {
+      text-align: left;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      max-height: 150px;
+      overflow-y: auto;
+      font-size: 0.85rem;
+      color: #991b1b;
+    }
+
+    .list-kosong li { margin-left: 18px; margin-bottom: 4px; font-weight: 600; }
+
+    .modal-btn-group { display: flex; gap: 10px; }
+
+    .modal-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .modal-btn.secondary { background: #e2e8f0; color: #334155; }
+
+    .status-text { font-size: 0.85rem; color: var(--primary-dark); margin-top: 10px; font-weight: 600; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<div class="anbk-container">
+  <div class="anbk-header">
+    <h1>SELEKSI INTERNAL LCC PAI FAIR 2026 - SD ANUGERAH ABADI 1 BENGALON</h1>
+  </div>
+
+  <!-- SCREEN 1: LOGIN DATA SISWA -->
+  <div class="login-screen" id="screenLogin">
+    <div class="login-title">Identitas Peserta Seleksi</div>
+    <div class="login-subtitle">Silakan isi Nama Lengkap dan Pilih Kelas Anda sebelum memulai tes seleksi.</div>
+    <form onsubmit="mulaiUjian(event)">
+      <div class="form-group">
+        <label for="inputNama">NAMA LENGKAP SISWA</label>
+        <input type="text" id="inputNama" placeholder="Masukkan nama lengkap" required>
+      </div>
+      <div class="form-group">
+        <label for="inputKelas">KELAS</label>
+        <select id="inputKelas" required>
+          <option value="" disabled selected>-- Pilih Kelas --</option>
+          <option value="5A">5A</option>
+          <option value="5B">5B</option>
+          <option value="6A">6A</option>
+          <option value="6B">6B</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-start">Mulai Kerjakan Ujian →</button>
+    </form>
+  </div>
+
+  <!-- SCREEN 2: SOAL UJIAN -->
+  <div id="screenUjian" class="hidden">
+    <div class="user-info-bar">
+      <div>PESERTA: <span id="dispNama" style="color: #1d4ed8;">-</span></div>
+      <div>KELAS: <span id="dispKelas" style="color: #1d4ed8;">-</span></div>
+    </div>
+
+    <div class="elemen-tabs" id="elemenTabs"></div>
+
+    <div class="anbk-body">
+      <div class="soal-panel">
+        <div>
+          <div class="soal-header-bar">
+            <div class="soal-header" id="soalHeader">Soal No. 1</div>
+            <div class="badge-tingkat" id="soalBadge">Sedang</div>
+          </div>
+          <div class="soal-konten" id="soalKonten">Memuat soal...</div>
+          <div class="opsi-list" id="opsiList"></div>
+        </div>
+
+        <div class="soal-footer">
+          <button class="btn-nav" onclick="prevSoal()">← Sebelumnya</button>
+          <button class="btn-nav" onclick="nextSoal()">Berikutnya →</button>
+        </div>
+      </div>
+
+      <div class="nav-panel">
+        <div class="nav-title">Nomor Soal (1–10)</div>
+        <div class="grid-nomor" id="gridNomor"></div>
+        <button class="btn-nav btn-finish" onclick="validasiSebelumKirim()">Selesai & Kirim Jawaban</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POP-UP MODAL (Peringatan & Konfirmasi) -->
+<div class="modal-overlay" id="modalNotif">
+  <div class="modal-box">
+    <div class="modal-icon" id="modalIcon">⚠️</div>
+    <div class="modal-title" id="modalTitle">Peringatan</div>
+    <div class="modal-desc" id="modalDesc">Pesan notifikasi di sini.</div>
+    <div class="list-kosong hidden" id="listKosongContainer">
+      <ul id="ulListKosong"></ul>
+    </div>
+    <div id="statusSimpan" class="status-text"></div>
+    <div class="modal-btn-group" id="modalBtnGroup">
+      <button class="modal-btn secondary" id="btnBatal" onclick="tutupModal()">Periksa Lagi</button>
+      <button class="modal-btn" id="btnKonfirmasi" onclick="prosesSelesai()">Kirim Jawaban</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // URL GOOGLE APPS SCRIPT ANDA
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzPi9NTPo9MPid_WCPxI4dM4pdANFumCK2rIyGYcjCvdwX-4I_jCdYXWW6Z5eRvtJmLAw/exec";
+
+  const elemenList = [
+    "Elemen A: Al-Qur'an dan Hadis",
+    "Elemen B: Akidah",
+    "Elemen C: Akhlak",
+    "Elemen D: Fikih",
+    "Elemen E: Sejarah Islam",
+    "Elemen F: Pengetahuan Umum"
+  ];
+
+  const opsiLetters = ['A', 'B', 'C', 'D'];
+
+  // BANK SOAL DENGAN SEBARAN KUNCI JAWABAN A-D MERATA (PURE BERDASARKAN DOKUMEN MATERI)
+  const bankSoal = [
+    // ELEMEN A: Al-Qur'an dan Hadis
+    [
+      { t: "Surah Al-Fatihah terdiri dari 7 ayat dan dinamakan Ummul Kitab. Arti dari nama surah Al-Fatihah adalah...", o: ["Pembukaan", "Nikmat yang Banyak", "Pertolongan", "Pemberi Peringatan"], k: "A", lvl: "Sedang" },
+      { t: "Kandungan utama Surah At-Tin menjelaskan bahwa manusia diciptakan dalam bentuk sebaik-baiknya, namun bisa jatuh ke derajat serendah-rendahnya jika...", o: ["Meminta pertolongan dari kegelapan malam", "Melalaikan kewajiban berkurban di bulan Zulhijah", "Tidak beriman dan tidak beramal saleh", "Suka memamerkan kebaikan di depan orang"], k: "C", lvl: "Sukar" },
+      { t: "Al-Qur'an memiliki nama lain 'Al-Furqan' sebagaimana tercantum dalam modul materi. Al-Furqan artinya...", o: ["Obat atau penyembuh", "Pembeda antara yang benar dan yang batil", "Pelajaran atau nasihat", "Kitab yang dituliskan"], k: "B", lvl: "Sedang" },
+      { t: "Berdasarkan Hadis Nabi Muhammad SAW, salat berjamaah lebih utama dibandingkan dengan salat sendirian (munfarid) dengan keutamaan pahala sebanyak...", o: ["27 derajat", "10 derajat", "17 derajat", "30 derajat"], k: "A", lvl: "Sedang" },
+      { t: "Hukum bacaan Nun Sukun (نْ) atau Tanwin apabila bertemu dengan huruf Ba (ب) dibaca berubah menjadi mim. Hukum bacaan ini dinamakan...", o: ["Izhar", "Idgham Bighunnah", "Ikhfa", "Iqlab"], k: "D", lvl: "Sukar" },
+      { t: "Apabila ada Mim Sukun (مْ) bertemu dengan huruf Ba (ب), maka hukum tajwidnya adalah...", o: ["Izhar Syafawi", "Ikhfa Syafawi", "Idgham Mimi", "Gunnah"], k: "B", lvl: "Sukar" },
+      { t: "Membaca dengung kurang lebih 2 harakat yang terjadi ketika huruf Mim (م) atau Nun (ن) bertasydid dinamakan...", o: ["Idgham Bilaghunnah", "Izhar Halqi", "Gunnah", "Iqlab"], k: "C", lvl: "Sukar" },
+      { t: "Surah pendek yang mengandung pokok isi perintah melaksanakan salat dan berkurban sebagai wujud syukur atas nikmat adalah...", o: ["Al-Kautsar", "Al-Falaq", "An-Nas", "Al-'Asr"], k: "A", lvl: "Sedang" },
+      { t: "Perhatikan ciri-ciri pendusta agama menurut Surah Al-Ma'un berikut ini! Yang TIDAK termasuk ciri-ciri pendusta agama adalah...", o: ["Menghardik anak yatim", "Tidak peduli pada fakir miskin", "Melakukan riya dalam ibadah", "Menyebarkan fitnah di tengah masyarakat"], k: "D", lvl: "Sedang" },
+      { t: "Dalam Surah Al-'Asr ditegaskan bahwa seluruh manusia berada dalam kerugian, KECUALI orang yang...", o: ["Suka memberi pinjaman barang berguna", "Beriman, beramal saleh, serta saling menasihati kebenaran & kesabaran", "Rutin melakukan salat sunah di sepertiga malam", "Memiliki harta melimpah dan kekuasaan besar"], k: "B", lvl: "Sukar" }
+    ],
+
+    // ELEMEN B: Akidah
+    [
+      { t: "Meyakini kitab-kitab suci yang diturunkan kepada para rasul seperti Taurat, Zabur, Injil, dan Al-Qur'an merupakan pengamalan Rukun Iman ke-...", o: ["1", "2", "3", "4"], k: "C", lvl: "Sedang" },
+      { t: "Allah SWT memiliki Asmaulhusna 'Al-Kholiq'. Arti dari Asmaulhusna Al-Kholiq adalah...", o: ["Yang Maha Membangkitkan", "Yang Maha Merajai", "Yang Maha Pengasih", "Yang Maha Pencipta"], k: "D", lvl: "Sedang" },
+      { t: "Sifat Allah 'Al-Ahad' menegaskan bahwa Allah adalah Zat Yang Maha Esa. Maksud dari Maha Esa adalah...", o: ["Allah satu-satunya dan tidak ada sekutu bagi-Nya", "Allah mengurus seluruh makhluk tanpa bergantung pada siapapun", "Allah memberikan rezeki tanpa mengharap balasan", "Allah suci dari segala kekurangan dan kesalahan"], k: "A", lvl: "Sedang" },
+      { t: "Sifat Asmaulhusna yang menunjukkan bahwa kasih sayang Allah meliputi SELURUH MAKHLUK di dunia tanpa terkecuali adalah...", o: ["Ar-Rahman", "Ar-Rahim", "As-Salam", "Al-Mukmin"], k: "A", lvl: "Sedang" },
+      { t: "Allah SWT memiliki sifat Asmaulhusna 'Al-Basyir' dan 'As-Syami''. Arti dari kedua Asmaulhusna tersebut secara berurutan adalah...", o: ["Yang Maha Mengetahui dan Yang Maha Perkasa", "Yang Maha Melihat dan Yang Maha Mendengar", "Yang Maha Kuat dan Yang Maha Menghidupkan", "Yang Maha Berdiri Sendiri dan Yang Maha Mematikan"], k: "B", lvl: "Sukar" },
+      { t: "Keyakinan bahwa Allah akan membangkitkan seluruh manusia dari alam kubur pada hari akhir sesuai dengan sifat Asmaulhusna...", o: ["Al-Mumit", "Al-Qayyum", "Al-Baa'its", "Al-Aziz"], k: "C", lvl: "Sukar" },
+      { t: "Asmaulhusna 'Al-Qayyum' mengajarkan bahwa Allah mengurus seluruh makhluk-Nya dengan cara...", o: ["Meminta bantuan para malaikat", "Berdiri sendiri tanpa bergantung pada siapa pun", "Mengharap balasan dari hamba-Nya", "Membagi wilayah kekuasaan-Nya"], k: "B", lvl: "Sukar" },
+      { t: "Meyakini ketetapan dan takdir Allah, baik maupun buruk, yang tetap disertai dengan ikhtiar dan doa merupakan pengertian dari...", o: ["Iman kepada Hari Akhir", "Iman kepada Rasul", "Iman kepada Malaikat", "Iman kepada Qada dan Qadar"], k: "D", lvl: "Sedang" },
+      { t: "Pengertian dari Asmaulhusna 'Al-Wahhab' adalah...", o: ["Yang Maha Memberi Karunia tanpa mengharap balasan", "Yang Maha Suci dari sifat buruk", "Yang Maha Memberi Kesejahteraan", "Yang Maha Memberi Rasa Aman"], k: "A", lvl: "Sedang" },
+      { t: "Allah SWT mematikan setiap makhluk yang bernyawa sesuai dengan batas waktu yang ditentukan. Sifat keagungan Allah ini ditunjukkan oleh Asmaulhusna...", o: ["Al-Muhyi", "Al-Qawiyyu", "Al-Mumit", "Al-Malik"], k: "C", lvl: "Sedang" }
+    ],
+
+    // ELEMEN C: Akhlak
+    [
+      { t: "Perilaku melakukan amal ibadah dengan tujuan ingin dilihat atau dipuji oleh orang lain dinamakan...", o: ["Takabur", "Hasad", "Riya", "Ghibah"], k: "C", lvl: "Sedang" },
+      { t: "Berdasarkan hadis Nabi, apabila seseorang diberi kepercayaan (amanah) lalu ia mengkhianatinya, maka orang tersebut memiliki ciri-ciri sifat...", o: ["Ananiyah", "Munafik", "Zalim", "Fasiq"], k: "B", lvl: "Sedang" },
+      { t: "Sikap 'Tawadhu' merupakan salah satu akhlak terpuji yang sangat disukai Allah. Arti dari Tawadhu adalah...", o: ["Rendah hati dan tidak sombong", "Mampu menahan diri saat marah", "Selalu berterima kasih atas nikmat", "Melakukan sesuatu semata karena Allah"], k: "A", lvl: "Sedang" },
+      { t: "Mengucapkan dan menjawab salam saat bertemu sesama muslim merupakan contoh akhlak terpuji sebagai wujud...", o: ["Sikap percaya diri", "Tolong-menolong", "Doa keselamatan bagi sesama", "Rasa empati pada penderitaan"], k: "C", lvl: "Sedang" },
+      { t: "Seseorang yang berani menanggung segala akibat dan risiko dari perbuatan yang telah dilakukannya menunjukkan sikap...", o: ["Tanggung jawab", "Mandiri", "Disiplin", "Toleransi"], k: "A", lvl: "Sedang" },
+      { t: "Berikut ini yang merupakan tiga ciri-ciri orang munafik berdasarkan hadis Nabi SAW adalah...", o: ["Sombong, iri hati, dan suka berbohong", "Apabila berkata berdusta, berjanji mengingkari, dipercaya berkhianat", "Menghardik anak yatim, lalai salat, dan riya", "Suka mencuri, memfitnah, dan berprasangka buruk"], k: "B", lvl: "Sukar" },
+      { t: "Sikap menaati aturan yang berlaku dan selalu tepat waktu dalam melaksanakan kewajiban dinamakan...", o: ["Ikhlas", "Kasih sayang", "Hemat", "Disiplin"], k: "D", lvl: "Sedang" },
+      { t: "Sikap turut merasakan apa yang sedang dirasakan oleh orang lain ketika tertimpa musibah dinamakan...", o: ["Simpati", "Toleransi", "Sopan santun", "Tawadhu"], k: "A", lvl: "Sedang" },
+      { t: "Sikap tidak boros dalam menggunakan uang, air, atau barang kebutuhan sehari-hari disebut...", o: ["Mandiri", "Hemat", "Percaya diri", "Jujur"], k: "B", lvl: "Sedang" },
+      { t: "Melakukan suatu pekerjaan atau ibadah dengan niat yang murni semata-mata karena Allah SWT dinamakan...", o: ["Kasih sayang", "Toleransi", "Sopan", "Ikhlas"], k: "D", lvl: "Sedang" }
+    ],
+
+    // ELEMEN D: Fikih
+    [
+      { t: "Syahadatain merupakan rukun Islam yang pertama. Syahadatain artinya...", o: ["Pernyataan bersiap menjalankan puasa", "Dua kalimat syahadat sebagai persaksian keesaan Allah dan kerasulan Nabi Muhammad", "Janji untuk mengeluarkan zakat fitrah", "Doa keselamatan di dunia dan akhirat"], k: "B", lvl: "Sedang" },
+      { t: "Darah, nanah, serta kotoran hewan atau manusia tergolong ke dalam kelompok najis...", o: ["Mukhaffafah (ringan)", "Mutawassitah (sedang)", "Mughallazah (berat)", "An-Najasah"], k: "B", lvl: "Sedang" },
+      { t: "Cara menyucikan diri dari Hadas Besar (seperti mimpi basah atau haid) dilakukan dengan cara...", o: ["Wudu", "Tayammum", "Mandi wajib", "Membasuh dengan air kelapa"], k: "C", lvl: "Sedang" },
+      { t: "Dalam hukum taklifi, suatu perbuatan yang apabila dikerjakan mendapat pahala dan jika ditinggalkan tidak berdosa dinamakan...", o: ["Wajib", "Sunnah", "Makruh", "Mubah"], k: "B", lvl: "Sukar" },
+      { t: "Tanda baligh bagi seorang anak laki-laki menurut ajaran Islam adalah...", o: ["Telah berusia tepat 10 tahun", "Mengalami haid", "Mengalami mimpi basah (ihtilam)", "Suaranya berubah menjadi lembut"], k: "C", lvl: "Sedang" },
+      { t: "Salat sunah yang dilaksanakan pada sepertiga malam terakhir setelah bangun dari tidur adalah salat...", o: ["Duha", "Tahajud", "Tarawih", "Witir"], k: "B", lvl: "Sedang" },
+      { t: "Pernyataan yang tepat mengenai hukum Salat Jumat bagi seorang laki-laki muslim, dewasa, berakal, dan menetap (mukmin) adalah...", o: ["Wajib berjamaah menggantikan salat zuhur", "Sunnah muakkad dilakukan di rumah", "Mubah jika tidak sibuk", "Makruh jika dilakukan di masjid"], k: "A", lvl: "Sukar" },
+      { t: "Air kencing bayi laki-laki yang belum berusia 2 tahun dan HANYA minum ASI termasuk jenis Najis Mukhaffafah. Cara menyucikannya adalah...", o: ["Dicuci dengan air mengalir 7 kali", "Diolesi debu yang suci", "Cukup dipercikkan air bersih pada bagian yang terkena", "Mandi wajib seluruh tubuh"], k: "C", lvl: "Sukar" },
+      { t: "Ketentuan hukum taklifi yang bermakna 'dilarang, berdosa jika dikerjakan dan mendapat pahala jika ditinggalkan' adalah...", o: ["Makruh", "Mubah", "Sunnah", "Haram"], k: "D", lvl: "Sedang" },
+      { t: "Mengingat Allah dengan mengucapkan kalimat-kalimat tayibah (seperti tasbih, tahmid, takbir) setelah salat dinamakan...", o: ["Doa", "Zikir", "Syahadat", "Ikamah"], k: "B", lvl: "Sedang" }
+    ],
+
+    // ELEMEN E: Sejarah Islam
+    [
+      { t: "Nabi yang dikenal sebagai manusia pertama sekaligus nabi pertama yang menjadi teladan dalam bertaubat secara sungguh-sungguh adalah...", o: ["Nabi Adam a.s.", "Nabi Nuh a.s.", "Nabi Idris a.s.", "Nabi Ibrahim a.s."], k: "A", lvl: "Sedang" },
+      { t: "Nabi Saleh a.s. diutus oleh Allah SWT kepada Kaum Samud. Mukjizat utama yang diberikan kepada Nabi Saleh a.s. adalah...", o: ["Membuat kapal besar di atas bukit", "Unta betina yang keluar dari dalam batu", "Suara yang sangat merdu saat membaca kitab", "Dapat berbicara dengan bangsa hewan"], k: "B", lvl: "Sukar" },
+      { t: "Nabi yang mendapat gelar 'Khalilullah' (kekasih Allah) dan menjadi teladan ketaatan serta keberanian melawan kezaliman Raja Namrud adalah...", o: ["Nabi Musa a.s.", "Nabi Sulaiman a.s.", "Nabi Ibrahim a.s.", "Nabi Isa a.s."], k: "C", lvl: "Sedang" },
+      { t: "Khalifah pertama dari Khulafaur Rasyidin yang dikenal sangat jujur, lembut, namun tegas dalam membela Islam adalah...", o: ["Umar bin Khattab", "Ali bin Abi Thalib", "Utsman bin Affan", "Abu Bakar Ash-Shiddiq"], k: "D", lvl: "Sedang" },
+      { t: "Mukjizat Nabi Musa a.s. yang sangat terkenal saat dikejar oleh pasukan Firaun di Laut Merah adalah...", o: ["Memiliki tongkat yang bisa berubah menjadi ular dan membelah lautan", "Tidak terbakar oleh kobaran api yang besar", "Dapat menyembuhkan penyakit buta", "Mengetahui bahasa binatang seperti semut"], k: "A", lvl: "Sedang" },
+      { t: "Nabi yang dianugerahi oleh Allah SWT berupa kerajaan yang sangat besar, kekayaan melimpah, serta kemampuan berbicara dengan hewan adalah...", o: ["Nabi Daud a.s.", "Nabi Sulaiman a.s.", "Nabi Yusuf a.s.", "Nabi Syu'aib a.s."], k: "B", lvl: "Sedang" },
+      { t: "Sahabat Nabi yang menjadi Khalifah ketiga dan terkenal dengan sifatnya yang sangat dermawan serta membukukan mushaf Al-Qur'an secara resmi adalah...", o: ["Utsman bin Affan", "Umar bin Khattab", "Ali bin Abi Thalib", "Abu Bakar Ash-Shiddiq"], k: "A", lvl: "Sedang" },
+      { t: "Gelar yang diberikan kepada Nabi Muhammad SAW sebagai nabi dan rasul terakhir penutup para nabi adalah...", o: ["Khalilullah", "Ulul Azmi", "Khataman Nabiyyin", "Babul 'Ilmi"], k: "C", lvl: "Sukar" },
+      { t: "Nabi Syu'aib a.s. diutus oleh Allah SWT untuk berdakwah kepada kaum Madyan dengan ajakan utama yaitu...", o: ["Berbuat adil dan jujur dalam menimbang dan berdagang", "Membuat bahtera besar untuk menghadapi banjir bandang", "Menghormati orang tua dan tidak berbohong", "Berhenti menyembah patung di bukit"], k: "A", lvl: "Sukar" },
+      { t: "Khalifah kedua Khulafaur Rasyidin yang terkenal dengan ketegasannya, keadilannya, serta berhasil memperluas wilayah Islam adalah...", o: ["Ali bin Abi Thalib", "Abu Bakar Ash-Shiddiq", "Utsman bin Affan", "Umar bin Khattab"], k: "D", lvl: "Sedang" }
+    ],
+
+    // ELEMEN F: Pengetahuan Umum
+    [
+      { t: "Penanggalan kalender Hijriah dihitung berdasarkan peredaran bulan mengelilingi bumi. Bulan pertama dalam kalender Hijriah adalah...", o: ["Ramadan", "Muharram", "Safar", "Zulhijah"], k: "B", lvl: "Sedang" },
+      { t: "Hari raya umat Islam yang diperingati setelah selesai menjalankan ibadah puasa selama sebulan penuh di bulan Ramadan dinamakan...", o: ["Hari Raya Idulfitri", "Hari Raya Iduladha", "Hari Tasyrik", "Tahun Baru Hijriah"], k: "A", lvl: "Sedang" },
+      { t: "Masjid yang terletak di Kota Madinah dan di dalamnya terdapat makam Nabi Muhammad SAW adalah...", o: ["Masjidilharam", "Masjid Al-Aqsa", "Masjid Quba", "Masjid Nabawi"], k: "D", lvl: "Sedang" },
+      { t: "Panggilan atau seruan yang dikumandangkan sebagai penanda bahwa waktu salat fardhu telah masuk dinamakan...", o: ["Ikamah", "Azan", "Tasbih", "Tahlil"], k: "B", lvl: "Sedang" },
+      { t: "Berikut ini merupakan contoh adab makan yang sesuai dengan ajaran Islam, KECUALI...", o: ["Mencuci tangan sebelum makan", "Membaca doa sebelum dan sesudah makan", "Makan dan minum menggunakan tangan kanan", "Makan sambil berdiri dan berbicara keras"], k: "D", lvl: "Sedang" },
+      { t: "Peristiwa penting diperingatinya Maulid Nabi Muhammad SAW jatuh pada tanggal 12 dalam bulan Hijriah...", o: ["Rabiulawal", "Rajab", "Sya'ban", "Zulkaidah"], k: "A", lvl: "Sukar" },
+      { t: "Kota suci tempat berdirinya bangunan Ka'bah dan Masjidilharam yang menjadi arah kiblat salat umat Islam adalah...", o: ["Madinah", "Mekah", "Yerusalem", "Mesir"], k: "B", lvl: "Sedang" },
+      { t: "Pernyataan panggilan singkat yang menandakan bahwa salat berjamaah akan segera dimulai dinamakan...", o: ["Azan", "Kutbah", "Ikamah", "Takbiratul Ihram"], k: "C", lvl: "Sedang" },
+      { t: "Peringatan peristiwa agung perjalanan malam Nabi Muhammad SAW menerima perintah salat lima waktu dinamakan...", o: ["Nuzulul Qur'an", "Isra Mikraj", "Tahun Baru Hijriah", "Hari Raya Iduladha"], k: "B", lvl: "Sedang" },
+      { t: "Bulan ke-12 atau bulan terakhir dalam urutan kalender Hijriah tempat dilaksanakannya ibadah Haji dan Kurban adalah...", o: ["Ramadan", "Sya'ban", "Muharram", "Zulhijah"], k: "D", lvl: "Sedang" }
+    ]
+  ];
+
+  let currentElemen = 0;
+  let currentSoal = 0;
+  let namaSiswa = "";
+  let kelasSiswa = "";
+  let jawabanUser = Array(6).fill().map(() => Array(10).fill(null));
+
+  function mulaiUjian(e) {
+    e.preventDefault();
+    namaSiswa = document.getElementById('inputNama').value;
+    kelasSiswa = document.getElementById('inputKelas').value;
+
+    document.getElementById('dispNama').innerText = namaSiswa;
+    document.getElementById('dispKelas').innerText = kelasSiswa;
+
+    document.getElementById('screenLogin').classList.add('hidden');
+    document.getElementById('screenUjian').classList.remove('hidden');
+
+    initApp();
+  }
+
+  function initApp() {
+    renderElemenTabs();
+    loadSoal();
+    renderGridNomor();
+  }
+
+  function renderElemenTabs() {
+    const container = document.getElementById('elemenTabs');
+    container.innerHTML = '';
+    elemenList.forEach((el, index) => {
+      const btn = document.createElement('button');
+      btn.className = `tab-btn ${index === currentElemen ? 'active' : ''}`;
+      btn.innerText = `Elemen ${String.fromCharCode(65 + index)}`;
+      btn.onclick = () => {
+        currentElemen = index;
+        currentSoal = 0;
+        renderElemenTabs();
+        loadSoal();
+        renderGridNomor();
+      };
+      container.appendChild(btn);
+    });
+  }
+
+  function loadSoal() {
+    const soal = bankSoal[currentElemen][currentSoal];
+    document.getElementById('soalHeader').innerText = `Elemen ${String.fromCharCode(65 + currentElemen)} - Soal No. ${currentSoal + 1}`;
+    
+    const badge = document.getElementById('soalBadge');
+    badge.innerText = soal.lvl;
+    badge.className = `badge-tingkat ${soal.lvl === 'Sukar' ? 'badge-sukar' : 'badge-sedang'}`;
+
+    document.getElementById('soalKonten').innerText = soal.t;
+
+    const opsiList = document.getElementById('opsiList');
+    opsiList.innerHTML = '';
+
+    soal.o.forEach((optText, oIdx) => {
+      const letter = opsiLetters[oIdx];
+      const isSelected = jawabanUser[currentElemen][currentSoal] === letter;
+      
+      const card = document.createElement('div');
+      card.className = `opsi-card ${isSelected ? 'selected' : ''}`;
+      card.onclick = () => pilihJawaban(letter);
+
+      card.innerHTML = `
+        <div class="opsi-label">${letter}</div>
+        <div>${optText}</div>
+      `;
+      opsiList.appendChild(card);
+    });
+
+    renderGridNomor();
+  }
+
+  function pilihJawaban(letter) {
+    jawabanUser[currentElemen][currentSoal] = letter;
+    loadSoal();
+  }
+
+  function renderGridNomor() {
+    const container = document.getElementById('gridNomor');
+    container.innerHTML = '';
+
+    for (let i = 0; i < 10; i++) {
+      const isTerisi = jawabanUser[currentElemen][i] !== null;
+      const isActive = i === currentSoal;
+
+      const btn = document.createElement('button');
+      btn.className = `btn-nomor ${isTerisi ? 'terisi' : ''} ${isActive ? 'active' : ''}`;
+      btn.innerText = i + 1;
+      btn.onclick = () => {
+        currentSoal = i;
+        loadSoal();
+      };
+      container.appendChild(btn);
+    }
+  }
+
+  function prevSoal() {
+    if (currentSoal > 0) { currentSoal--; loadSoal(); }
+  }
+
+  function nextSoal() {
+    if (currentSoal < 9) { currentSoal++; loadSoal(); }
+  }
+
+  // VALIDASI SOAL HARUS TERISI SEMUA
+  function validasiSebelumKirim() {
+    let belumLengkap = [];
+
+    for (let e = 0; e < 6; e++) {
+      let kosong = [];
+      for (let s = 0; s < 10; s++) {
+        if (jawabanUser[e][s] === null) {
+          kosong.push(s + 1);
+        }
+      }
+      if (kosong.length > 0) {
+        belumLengkap.push({
+          elemen: String.fromCharCode(65 + e),
+          namaElemen: elemenList[e],
+          nomor: kosong
+        });
+      }
+    }
+
+    if (belumLengkap.length > 0) {
+      document.getElementById('modalIcon').innerText = "⚠️";
+      document.getElementById('modalTitle').innerText = "Jawaban Belum Lengkap!";
+      document.getElementById('modalDesc').innerText = "Anda belum bisa mengirim jawaban. Masih ada soal yang belum dijawab pada elemen berikut:";
+      
+      const ul = document.getElementById('ulListKosong');
+      ul.innerHTML = '';
+      belumLengkap.forEach(item => {
+        const li = document.createElement('li');
+        li.innerText = `${item.namaElemen}: Nomor ${item.nomor.join(', ')}`;
+        ul.appendChild(li);
+      });
+
+      document.getElementById('listKosongContainer').classList.remove('hidden');
+      document.getElementById('statusSimpan').innerText = '';
+      
+      document.getElementById('btnBatal').classList.remove('hidden');
+      document.getElementById('btnBatal').innerText = "Lengkapi Sekarang";
+      document.getElementById('btnBatal').onclick = tutupModal;
+
+      document.getElementById('btnKonfirmasi').classList.add('hidden');
+
+      bukaModal();
+    } else {
+      document.getElementById('modalIcon').innerText = "📝";
+      document.getElementById('modalTitle').innerText = "Konfirmasi Pengiriman";
+      document.getElementById('modalDesc').innerText = "Semua soal (60/60) sudah terisi dengan lengkap. Apakah Anda yakin ingin mengirim jawaban ini?";
+      
+      document.getElementById('listKosongContainer').classList.add('hidden');
+      document.getElementById('statusSimpan').innerText = '';
+
+      document.getElementById('btnBatal').classList.remove('hidden');
+      document.getElementById('btnBatal').innerText = "Periksa Lagi";
+      document.getElementById('btnBatal').onclick = tutupModal;
+
+      document.getElementById('btnKonfirmasi').classList.remove('hidden');
+      document.getElementById('btnKonfirmasi').innerText = "Ya, Kirim Sekarang";
+      document.getElementById('btnKonfirmasi').onclick = prosesSelesai;
+
+      bukaModal();
+    }
+  }
+
+  function bukaModal() {
+    document.getElementById('modalNotif').classList.add('active');
+  }
+
+  function tutupModal() {
+    document.getElementById('modalNotif').classList.remove('active');
+  }
+
+  function prosesSelesai() {
+    let skorPerElemen = [];
+    let totalBenarSeluruhnya = 0;
+
+    for (let e = 0; e < 6; e++) {
+      let benar = 0;
+      for (let s = 0; s < 10; s++) {
+        if (jawabanUser[e][s] === bankSoal[e][s].k) {
+          benar++;
+        }
+      }
+      totalBenarSeluruhnya += benar;
+      let skor = (benar / 10) * 100;
+      skorPerElemen.push(skor.toFixed(0));
+    }
+
+    let skorTotal = ((totalBenarSeluruhnya / 60) * 100).toFixed(1);
+
+    document.getElementById('statusSimpan').innerText = "⏳ Sedang mengirim jawaban ke sistem...";
+    document.getElementById('btnBatal').classList.add('hidden');
+    document.getElementById('btnKonfirmasi').classList.add('hidden');
+
+    fetch(WEB_APP_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nama: namaSiswa,
+        kelas: kelasSiswa,
+        skorPerElemen: skorPerElemen,
+        skorTotal: skorTotal
+      })
+    }).then(() => {
+      tampilkanPesanSukses();
+    }).catch(err => {
+      document.getElementById('statusSimpan').innerText = "⚠️ Terjadi kesalahan koneksi, silakan coba lagi.";
+      document.getElementById('btnBatal').classList.remove('hidden');
+      document.getElementById('btnKonfirmasi').classList.remove('hidden');
+    });
+  }
+
+  function tampilkanPesanSukses() {
+    document.getElementById('modalIcon').innerText = "🎉";
+    document.getElementById('modalTitle').innerText = "Ujian Selesai!";
+    document.getElementById('modalDesc').innerHTML = `
+      Jawaban atas nama <strong>${namaSiswa}</strong> (Kelas ${kelasSiswa}) telah <strong>BERHASIL TERKIRIM</strong>.<br><br>
+      Terima kasih telah mengikuti seleksi dengan jujur.
+    `;
+    document.getElementById('statusSimpan').innerText = "✅ Pengiriman Berhasil!";
+    
+    document.getElementById('btnBatal').classList.add('hidden');
+    document.getElementById('btnKonfirmasi').classList.remove('hidden');
+    document.getElementById('btnKonfirmasi').innerText = "Tutup Halaman";
+    document.getElementById('btnKonfirmasi').onclick = () => {
+      location.reload();
+    };
+  }
+</script>
+
+</body>
+</html>
